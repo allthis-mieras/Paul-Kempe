@@ -1,0 +1,27 @@
+---
+const { settings } = Astro.props;
+
+console.log("settings", settings);
+---
+
+<meta charset="utf-8" />
+<title>{settings.defaultPageTitle}</title>
+<meta name="description" content={settings.defaultPageDescription} />
+<link rel="icon" type="image/svg+xml" href={settings.faviconUrl} />
+<meta name="viewport" content="width=device-width" />
+<meta name="generator" content={Astro.generator} />
+<!--  Essential META Tags -->
+<meta property="og:title" content={settings.defaultPageTitle} />
+<meta property="og:type" content="website" />
+<meta property="og:image" content={settings.shareImage} />
+<meta property="og:url" content={settings.ogUrl} />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!--  Non-Essential, But Recommended -->
+<meta property="og:description" content={settings.defaultPageDescription} />
+<meta property="og:site_name" content={settings.defaultPageTitle} />
+<meta name="twitter:image:alt" content={settings.twitterImageAlt} />
+
+<!--  Non-Essential, But Required for Analytics -->
+<!-- <meta property="fb:app_id" content="your_app_id" /> -->
+<!-- <meta name="twitter:site" content="@website-username" /> -->

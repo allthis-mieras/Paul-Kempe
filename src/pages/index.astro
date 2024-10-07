@@ -1,0 +1,150 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import type { SanityDocument } from "@sanity/client";
+import { loadQuery } from "../sanity/lib/load-query";
+import { urlForImage } from "../sanity/lib/urlForImage";
+
+import { PortableText } from "astro-portabletext";
+
+const { data: posts } = await loadQuery<{
+  title: string;
+  body: any[];
+  featImage: any;
+}>({
+  query: `*[_type == "post"][0...3]`,
+});
+const { data: pages } = await loadQuery<{
+  title: string;
+  pageType: string;
+  body?: string;
+  contact?: string;
+}>({
+  query: `*[_type == "pages"]`, // Haal alle pages op
+});
+
+// console.log("Posts:", posts);
+// console.log("Pages:", pages);
+---
+
+<Layout>
+  <h1>Paul Kempe</h1>
+
+  <h2>Pages</h2>
+
+  {
+    Array.isArray(pages) &&
+      pages
+        .sort((a, b) => {
+          const order = ["homepage", "about", "contact"];
+          return order.indexOf(a.pageType) - order.indexOf(b.pageType);
+        })
+        .map((page) => (
+          <div>
+            <h3>{page.title}</h3>
+
+            {page.pageType === "homepage" && (
+              <div>
+                {page.showreelDesktop &&
+                  page.posterImageDesktop &&
+                  page.showreelMobile &&
+                  page.posterImageMobile && (
+                    <div class="responsive-video">
+                      <video
+                        controls
+                        autoplay
+                        loop
+                        muted
+                        poster={urlForImage(page.posterImageDesktop).url()}
+                        class="desktop-video"
+                      >
+                        <source src={page.showreelDesktop} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                      <video
+                        controls
+                        autoplay
+                        loop
+                        muted
+                        poster={urlForImage(page.posterImageMobile).url()}
+                        class="mobile-video"
+                      >
+                        <source src={page.showreelMobile} type="video/mp4" />
+                        Your browser does not support the video tag.
+                      </video>
+                    </div>
+                  )}
+
+                <pre>This is the homepage content.</pre>
+              </div>
+            )}
+
+            {page.pageType === "about" && page.body && (
+              <div>
+                <PortableText value={page.body} />
+              </div>
+            )}
+
+            {page.pageType === "contact" && page.contact && (
+              <div>
+                <PortableText value={page.contact} />
+              </div>
+            )}
+          </div>
+        ))
+  }
+
+  <h2>Posts</h2>
+  <ul>
+    {
+      posts.map((post) => (
+        <li>
+          <h3 />
+          <a href={`post/${post.slug.current}`}>{post.title}</a>
+          {post.featImage && (
+            <Image
+              src={urlForImage(post.featImage).url()}
+              widths={[480, 960, 1440, 1920, 2560]}
+              inferSize
+              sizes="(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1080px) 720px, 1080px"
+              alt={post.title}
+              class="page__cover"
+            />
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</Layout>
+
+<style lang="scss">
+  .responsive-video {
+    display: flex;
+    flex-direction: column;
+  }
+
+  video {
+    &[poster] {
+      object-fit: cover;
+    }
+  }
+
+  .desktop-video {
+    display: none;
+    aspect-ratio: 16 / 9;
+  }
+
+  .mobile-video {
+    display: block;
+    aspect-ratio: 9 / 16;
+  }
+
+  @media (min-width: 768px) {
+    .desktop-video {
+      display: block;
+    }
+    .mobile-video {
+      display: none;
+    }
+  }
+</style>

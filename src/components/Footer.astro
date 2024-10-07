@@ -1,0 +1,64 @@
+---
+const { title, showDate, timeZone = true } = Astro.props;
+console.log("timeZone", timeZone);
+const getLocalTime = (showDate: boolean) => {
+  const now = new Date();
+  const options = { timeZone: timeZone || "Europe/Amsterdam", hour12: false };
+  let localTime = now.toLocaleString("nl-NL", options).replace("T", " ");
+  const milliseconds = now.getMilliseconds().toString().padStart(3, "0");
+  if (!showDate) {
+    localTime = localTime.split(" ")[1]; // Remove the date part
+  }
+  return `${localTime}:${milliseconds}`;
+};
+
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <p>{year} © {title}</p>
+  <p id="local-time">{getLocalTime(showDate)}</p>
+  <p>website: <a href="#">allthis.digital</a></p>
+</footer>
+
+<script define:vars={{ timeZone }}>
+  const showDate = false; // Set this to false to hide the date
+
+  const updateLocalTime = () => {
+    const getLocalTime = (showDate) => {
+      const now = new Date();
+      const options = {
+        timeZone: timeZone || "Europe/Amsterdam",
+        hour12: false,
+      };
+      let localTime = now.toLocaleString("nl-NL", options).replace("T", " ");
+      const milliseconds = now.getMilliseconds().toString().padStart(3, "0");
+      if (!showDate) {
+        localTime = localTime.split(" ")[1]; // Remove the date part
+      }
+      return `${localTime}:${milliseconds}`;
+    };
+
+    const localTimeElement = document.getElementById("local-time");
+    if (localTimeElement) {
+      localTimeElement.textContent = getLocalTime(showDate);
+    }
+  };
+
+  setInterval(updateLocalTime, 10); // Update Time
+</script>
+
+<style>
+  footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    font-size: 0.675rem;
+  }
+
+  a {
+    color: #333;
+  }
+</style>

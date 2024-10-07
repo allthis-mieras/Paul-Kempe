@@ -1,0 +1,27 @@
+---
+import "../assets/global.scss";
+
+import { getSiteSettings } from "../sanity/lib/sanity";
+const siteSettings = await getSiteSettings();
+
+import Footer from "../components/Footer.astro";
+import SiteMeta from "../components/siteMeta.astro";
+
+import { VisualEditing } from "@sanity/astro/visual-editing";
+
+const visualEditingEnabled =
+  import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED == "true";
+---
+
+<html lang={siteSettings.language || "en"}>
+  <head>
+    <SiteMeta settings={siteSettings} />
+  </head>
+  <body>
+    <slot />
+    <Footer title={siteSettings.title} timeZone={siteSettings.timezone} />
+    <VisualEditing enabled={visualEditingEnabled} />
+  </body>
+</html>
+
+<style></style>

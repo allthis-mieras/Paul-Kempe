@@ -1,0 +1,27 @@
+---
+import type { SanityDocument } from "@sanity/client";
+import { loadQuery } from "../sanity/lib/load-query";
+import Layout from "../layouts/Layout.astro";
+import { PortableText } from "astro-portabletext";
+
+const { data: page } = await loadQuery<{
+  title: string;
+  bodyAbout: any;
+  featImage: any;
+}>({
+  query: `*[_type == "pages" && pageType == "about"]`,
+});
+
+console.log(page); // Debugging voor pages
+---
+
+<Layout>
+  {
+    page.map((page) => (
+      <div>
+        <h1>{page.title}</h1>
+        <PortableText value={page.body} />
+      </div>
+    ))
+  }
+</Layout>
