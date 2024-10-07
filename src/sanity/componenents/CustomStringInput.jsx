@@ -1,12 +1,12 @@
 import { useCallback } from 'react'
 import { Stack, Text, TextInput } from '@sanity/ui'
 import { useFormValue } from 'sanity'
-import { useGetFormValue } from 'sanity'
+
 
 import { set, unset } from 'sanity'
 
 export const CustomStringInput = (props) => {
-    const { elementProps, onChange, value = '', type, options } = props
+    const { elementProps, onChange, value = '', options } = props
     const docId = String(useFormValue(["_id"]));
 
 
