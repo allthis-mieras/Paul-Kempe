@@ -49,6 +49,7 @@ const { data: pages } = await loadQuery<{
                       <video
                         controls
                         autoplay
+                        playsinline
                         loop
                         muted
                         poster={urlForImage(page.posterImageDesktop).url()}
@@ -60,6 +61,7 @@ const { data: pages } = await loadQuery<{
                       <video
                         controls
                         autoplay
+                        playsinline
                         loop
                         muted
                         poster={urlForImage(page.posterImageMobile).url()}
