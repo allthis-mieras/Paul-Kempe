@@ -21,6 +21,8 @@ export default defineConfig({
       studioUrl: "/admin"
     }
   }), react()],
-  output: "server",
-  adapter: netlify()
+  output: 'server',
+  adapter: netlify({
+    imageCDN: false,
+  }),
 });
