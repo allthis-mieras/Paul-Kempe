@@ -6,22 +6,26 @@ const { title, logoVideo, logoFallback = true } = Astro.props;
 ---
 
 <header>
-  {
-    logoVideo ? (
-      <video
-        autoplay
-        loop
-        muted
-        playsinline
-        poster={urlForImage(logoFallback).url()}
-      >
-        <source src={urlForFile(logoVideo)} type="video/mp4" />
-        {logoFallback && (
-          <img src={urlForImage(logoFallback).url()} alt={title} />
-        )}
-      </video>
-    ) : (
-      <img src={urlForImage(logoFallback).url()} alt={title} />
-    )
-  }
+  <div class="logo">
+    {
+      logoVideo ? (
+        <video
+          autoplay
+          loop
+          muted
+          playsinline
+          poster={urlForImage(logoFallback).url()}
+        >
+          <source src={urlForFile(logoVideo)} type="video/mp4" />
+          {logoFallback && (
+            <img src={urlForImage(logoFallback).url()} alt={title} />
+          )}
+        </video>
+      ) : (
+        <img src={urlForImage(logoFallback).url()} alt={title} />
+      )
+    }
+  </div>
 </header>
+
+<style></style>
