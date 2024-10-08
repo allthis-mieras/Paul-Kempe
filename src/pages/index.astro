@@ -33,8 +33,8 @@ const { data: pages } = await loadQuery<{
           return order.indexOf(a.pageType) - order.indexOf(b.pageType);
         })
         .map((page) => (
-          <div>
-            <h3>{page.title}</h3>
+          <div class="container">
+            <h2>{page.title}</h2>
 
             {page.pageType === "homepage" && (
               <div>
@@ -63,7 +63,7 @@ const { data: pages } = await loadQuery<{
             )}
 
             {page.pageType === "about" && page.body && (
-              <div>
+              <div class="">
                 <PortableText value={page.body} />
               </div>
             )}
@@ -77,14 +77,15 @@ const { data: pages } = await loadQuery<{
         ))
   }
 
-  <section class="news">
+  <section class="container posts">
     <h2>Posts</h2>
     <u>
       {
         posts.map((post: SanityDocument) => (
           <li>
-            <h3 />
-            <a href={`post/${post.slug.current}`}>{post.title}</a>
+            <a href={`post/${post.slug.current}`}>
+              <h3>{post.title}</h3>
+            </a>
             {post.featImage && (
               <Image
                 src={urlForImage(post.featImage).url()}
@@ -102,4 +103,23 @@ const { data: pages } = await loadQuery<{
   </section>
 </Layout>
 
-<style lang="scss"></style>
+<style lang="scss">
+  .posts {
+    display: grid;
+
+    gap: 1rem;
+    margin-top: 2rem;
+
+    & li {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    & img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+</style>

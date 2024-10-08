@@ -1,5 +1,6 @@
 ---
-import "../assets/global.scss";
+import "../assets/scss/global.scss";
+import "../assets/scss/main.scss";
 
 import { getSiteSettings } from "../sanity/lib/sanity";
 const siteSettings = await getSiteSettings();
@@ -25,7 +26,10 @@ const visualEditingEnabled =
       logoVideo={siteSettings.logo}
       logoFallback={siteSettings.logoFallback}
     />
-    <slot />
+    <main id="main-content" transition:animate="fade">
+      <slot />
+    </main>
+
     <Footer title={siteSettings.title} timeZone={siteSettings.timezone} />
     <VisualEditing enabled={visualEditingEnabled} />
   </body>

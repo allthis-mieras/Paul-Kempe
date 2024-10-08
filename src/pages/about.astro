@@ -19,9 +19,11 @@ const { data: page } = await loadQuery<{
 ---
 
 <Layout>
-  <div>
-    <h1>{page.title}</h1>
-    <PortableText value={page.body} />
+  <div class="container grid">
+    <div>
+      <h1>{page.title}</h1>
+      <PortableText value={page.body} />
+    </div>
     {
       page.featImage && (
         <Image
@@ -36,3 +38,16 @@ const { data: page } = await loadQuery<{
     }
   </div>
 </Layout>
+
+<style lang="scss">
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1vw;
+
+    & img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+</style>

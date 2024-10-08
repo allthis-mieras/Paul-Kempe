@@ -3,6 +3,7 @@ import sanity from "@sanity/astro";
 import react from "@astrojs/react";
 import { loadEnv } from "vite";
 import netlify from "@astrojs/netlify";
+import icon from "astro-icon"
 const {
   PUBLIC_SANITY_PROJECT_ID,
   PUBLIC_SANITY_DATASET,
@@ -20,7 +21,7 @@ export default defineConfig({
     stega: {
       studioUrl: "/admin"
     }
-  }), react()],
+  }), react(), icon()],
   output: 'server',
   adapter: netlify({
     imageCDN: false, // fix the images for Netlify

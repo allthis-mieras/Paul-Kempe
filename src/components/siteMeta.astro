@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from "astro:transitions";
 const { settings } = Astro.props;
 
 // console.log("settings", settings);
@@ -25,3 +26,5 @@ const { settings } = Astro.props;
 <!--  Non-Essential, But Required for Analytics -->
 <!-- <meta property="fb:app_id" content="your_app_id" /> -->
 <!-- <meta name="twitter:site" content="@website-username" /> -->
+
+<ViewTransitions />

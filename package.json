@@ -25,16 +25,22 @@
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "astro": "^4.12.2",
+    "astro-icon": "^1.1.1",
     "astro-portabletext": "^0.10.0",
+    "ionicons": "^7.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sanity": "^3.59.1",
     "sanity-plugin-mux-input": "^2.3.6",
     "sass": "^1.79.4",
     "sass-loader": "^16.0.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "utopia-core": "^1.6.0",
+    "utopia-core-scss": "^1.1.0"
   },
   "devDependencies": {
+    "@iconify-json/ion": "^1.2.1",
+    "accessible-astro-components": "^2.3.6",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
     "vite": "^5.3.4"

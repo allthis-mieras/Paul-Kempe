@@ -59,8 +59,7 @@ body {
 }
 
 body {
-    display: flex;
-    flex-direction: column;
+
     color: var(--font-color);
     background-color: var(--background);
 
@@ -74,9 +73,10 @@ body {
 }
 
 pre {
-    padding: 1rem;
-    border-radius: 0.35rem;
+    padding: var(--space-1xl);
+    border-radius: 0.35em;
     border: 2px solid var(--action-color);
+    margin-block: var(--space-xs);
 }
 
 body .pagination a {
@@ -100,7 +100,17 @@ body .pagination a {
     & h1,
     & h2 {
         font-family: var(--font-family-serif);
-        font-size: var(--fontsize-8);
+        font-size: var(--fs-8);
         line-height: 100%;
     }
+}
+
+.visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
 }
