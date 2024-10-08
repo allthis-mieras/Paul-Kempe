@@ -1,0 +1,62 @@
+---
+import { urlForImage } from "../sanity/lib/urlForImage";
+const {
+  class: className,
+  videoUrl,
+  posterImage,
+  aspectRatio,
+  ...rest
+} = Astro.props;
+---
+
+<div>
+  <video
+    style={`--aspect-ratio: ${aspectRatio}`}
+    class={className}
+    controls
+    autoplay
+    playsinline
+    loop
+    muted
+    poster={urlForImage(posterImage).url()}
+    {...rest}
+  >
+    <source src={videoUrl} type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+<style lang="scss">
+  .responsive-video {
+    display: flex;
+    flex-direction: column;
+  }
+
+  video {
+    aspect-ratio: var(--aspect-ratio);
+    width: 100%;
+
+    &[poster] {
+      object-fit: cover;
+    }
+  }
+
+  .desktop-video {
+    display: none;
+    aspect-ratio: 16 / 9;
+  }
+
+  .mobile-video {
+    display: block;
+    aspect-ratio: 9 / 16;
+  }
+
+  @media (min-width: 768px) {
+    .desktop-video {
+      display: block;
+    }
+    .mobile-video {
+      display: none;
+    }
+  }
+</style>

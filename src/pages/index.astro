@@ -1,10 +1,11 @@
 ---
 import type { SanityDocument } from "@sanity/client";
 import Layout from "../layouts/Layout.astro";
+import CustomVideoPlayer from "../components/customVideoPlayer.astro";
+
 import { Image } from "astro:assets";
 import { loadQuery } from "../sanity/lib/load-query";
 import { urlForImage } from "../sanity/lib/urlForImage";
-
 import { PortableText } from "astro-portabletext";
 
 const { data: posts } = await loadQuery<SanityDocument[]>({
@@ -46,30 +47,18 @@ const { data: pages } = await loadQuery<{
                   page.showreelMobile &&
                   page.posterImageMobile && (
                     <div class="responsive-video">
-                      <video
-                        controls
-                        autoplay
-                        playsinline
-                        loop
-                        muted
-                        poster={urlForImage(page.posterImageDesktop).url()}
+                      <CustomVideoPlayer
+                        videoUrl={page.showreelDesktop}
+                        posterImage={page.posterImageDesktop}
+                        aspectRatio="16/9"
                         class="desktop-video"
-                      >
-                        <source src={page.showreelDesktop} type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
-                      <video
-                        controls
-                        autoplay
-                        playsinline
-                        loop
-                        muted
-                        poster={urlForImage(page.posterImageMobile).url()}
+                      />
+                      <CustomVideoPlayer
+                        videoUrl={page.showreelMobile}
+                        posterImage={page.posterImageMobile}
+                        aspectRatio="9/16"
                         class="mobile-video"
-                      >
-                        <source src={page.showreelMobile} type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
+                      />
                     </div>
                   )}
 
@@ -115,34 +104,4 @@ const { data: pages } = await loadQuery<{
   </ul>
 </Layout>
 
-<style lang="scss">
-  .responsive-video {
-    display: flex;
-    flex-direction: column;
-  }
-
-  video {
-    &[poster] {
-      object-fit: cover;
-    }
-  }
-
-  .desktop-video {
-    display: none;
-    aspect-ratio: 16 / 9;
-  }
-
-  .mobile-video {
-    display: block;
-    aspect-ratio: 9 / 16;
-  }
-
-  @media (min-width: 768px) {
-    .desktop-video {
-      display: block;
-    }
-    .mobile-video {
-      display: none;
-    }
-  }
-</style>
+<style lang="scss"></style>

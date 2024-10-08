@@ -85,9 +85,20 @@ export const siteSettingsType = defineType({
       group: "website",
     }),
     defineField({
-      name: "logo",
+      name: "logoVideo",
+      type: "file",
+      title: "Logo Video",
+      description: "Add your logo video (MP4) here.",
+      group: "website",
+      options: {
+        accept: "video/mp4",
+      },
+    }),
+    defineField({
+      name: "logoFallback",
       type: "image",
-      title: "Logo",
+      title: "Logo Image",
+      description: "Add your logo fallback image here.",
       group: "website",
     }),
     defineField({

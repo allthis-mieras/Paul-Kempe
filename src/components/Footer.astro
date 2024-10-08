@@ -1,6 +1,6 @@
 ---
 const { title, showDate, timeZone = true } = Astro.props;
-console.log("timeZone", timeZone);
+// console.log("timeZone", timeZone);
 const getLocalTime = (showDate: boolean) => {
   const now = new Date();
   const options = { timeZone: timeZone || "Europe/Amsterdam", hour12: false };

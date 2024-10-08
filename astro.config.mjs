@@ -23,6 +23,6 @@ export default defineConfig({
   }), react()],
   output: 'server',
   adapter: netlify({
-    imageCDN: false,
+    imageCDN: false, // fix the images for Netlify
   }),
 });
