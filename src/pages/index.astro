@@ -25,10 +25,6 @@ const { data: pages } = await loadQuery<{
 ---
 
 <Layout>
-  <h1>Paul Kempe</h1>
-
-  <h2>Pages</h2>
-
   {
     Array.isArray(pages) &&
       pages
@@ -81,27 +77,29 @@ const { data: pages } = await loadQuery<{
         ))
   }
 
-  <h2>Posts</h2>
-  <ul>
-    {
-      posts.map((post: SanityDocument) => (
-        <li>
-          <h3 />
-          <a href={`post/${post.slug.current}`}>{post.title}</a>
-          {post.featImage && (
-            <Image
-              src={urlForImage(post.featImage).url()}
-              widths={[480, 960, 1440, 1920, 2560]}
-              inferSize
-              sizes="(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1080px) 720px, 1080px"
-              alt={post.title}
-              class="page__cover"
-            />
-          )}
-        </li>
-      ))
-    }
-  </ul>
+  <section class="news">
+    <h2>Posts</h2>
+    <u>
+      {
+        posts.map((post: SanityDocument) => (
+          <li>
+            <h3 />
+            <a href={`post/${post.slug.current}`}>{post.title}</a>
+            {post.featImage && (
+              <Image
+                src={urlForImage(post.featImage).url()}
+                widths={[480, 960, 1440, 1920, 2560]}
+                inferSize
+                sizes="(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1080px) 720px, 1080px"
+                alt={post.title}
+                class="page__cover"
+              />
+            )}
+          </li>
+        ))
+      }
+    </u>
+  </section>
 </Layout>
 
 <style lang="scss"></style>

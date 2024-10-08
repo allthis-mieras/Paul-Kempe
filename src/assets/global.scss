@@ -41,11 +41,11 @@
 
 // dark color scheme overrides
 .darkmode {
-    --font-color: var(--neutral-100);
+    --font-color: #f1f1f1;
     --background-full: #000;
     --action-color: var(--secondary-100);
     --action-color-state: var(--secondary-500);
-    --background: var(--dark-100);
+    --background: #000;
     --primary-background: var(--primary-500);
     --neutral-background: var(--neutral-900);
 }

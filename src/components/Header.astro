@@ -1,31 +1,65 @@
 ---
 import { urlForImage } from "../sanity/lib/urlForImage";
 import { urlForFile } from "../sanity/lib/urlForFile";
+import Nav from "../components/Nav.astro";
 
 const { title, logoVideo, logoFallback = true } = Astro.props;
 ---
 
 <header>
+  <h1>{title}</h1>
   <div class="logo">
-    {
-      logoVideo ? (
-        <video
-          autoplay
-          loop
-          muted
-          playsinline
-          poster={urlForImage(logoFallback).url()}
-        >
-          <source src={urlForFile(logoVideo)} type="video/mp4" />
-          {logoFallback && (
-            <img src={urlForImage(logoFallback).url()} alt={title} />
-          )}
-        </video>
-      ) : (
-        <img src={urlForImage(logoFallback).url()} alt={title} />
-      )
-    }
+    <a href="/">
+      {
+        logoVideo ? (
+          <video
+            autoplay
+            loop
+            muted
+            playsinline
+            poster={urlForImage(logoFallback).url()}
+          >
+            <source src={urlForFile(logoVideo)} type="video/mp4" />
+            {logoFallback && (
+              <img src={urlForImage(logoFallback).url()} alt={title} />
+            )}
+          </video>
+        ) : (
+          <img src={urlForImage(logoFallback).url()} alt={title} />
+        )
+      }
+    </a>
   </div>
+
+  <Nav />
 </header>
 
-<style></style>
+<style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 0 1rem;
+    background-color: var(--color-background);
+    color: var(--color-text);
+  }
+  header > * {
+    max-width: 33%;
+  }
+
+  h1 {
+    font-size: 0.5rem;
+    color: red;
+    opacity: 0;
+  }
+
+  .logo {
+    min-width: 256px;
+
+    & video {
+      width: auto;
+      height: 15vh;
+    }
+  }
+</style>
