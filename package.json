@@ -39,6 +39,7 @@
     "utopia-core-scss": "^1.1.0"
   },
   "devDependencies": {
+    "@iconify-json/akar-icons": "^1.2.1",
     "@iconify-json/ion": "^1.2.1",
     "accessible-astro-components": "^2.3.6",
     "prettier": "^3.3.3",

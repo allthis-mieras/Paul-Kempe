@@ -1,6 +1,6 @@
 ---
-// import ResponsiveToggle from "./ResponsiveToggle.astro";
-// import { DarkMode } from "accessible-astro-components";
+import ResponsiveToggle from "./ResponsiveToggle.astro";
+import { DarkMode } from "accessible-astro-components";
 import { Image } from "astro:assets";
 // import logo from "../assets/img/logo.svg";
 
@@ -54,8 +54,8 @@ const { title, logoVideo, logoFallback = true } = Astro.props;
           <slot />
         </ul>
       </nav>
-      <!-- <DarkMode /> -->
-      <!-- <ResponsiveToggle /> -->
+      <DarkMode />
+      <ResponsiveToggle />
     </div>
     <nav class="mobile-menu" aria-label="Main navigation mobile">
       <ul class="menu">
