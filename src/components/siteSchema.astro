@@ -1,7 +1,7 @@
 ---
 import { getSiteSettings } from "../sanity/lib/sanity";
 const siteSettings = await getSiteSettings();
-console.log("SchemaMarkup", siteSettings.schemaMarkup[0]);
+// console.log("SchemaMarkup", siteSettings.schemaMarkup[0]);
 const schemaInput = siteSettings.schemaMarkup[0];
 
 const address = schemaInput.address || {};
@@ -21,9 +21,8 @@ const schemaMarkup = {
     addressCountry: address.addressCountry || "",
   },
 };
+
+console.log("schemaMarkup", schemaMarkup);
 ---
 
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({ schemaMarkup })}
-/>
+<script type="application/ld+json" set:html={JSON.stringify(schemaMarkup)} />
