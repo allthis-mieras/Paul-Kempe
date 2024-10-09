@@ -3,7 +3,9 @@ import Navigation from "../components/Navigation.astro";
 import { SkipLinks } from "accessible-astro-components";
 import { Icon } from "astro-icon/components";
 
-const { title, logoVideo, logoFallback = true } = Astro.props;
+const { title, logoVideo, logoFallback = true, linkedin } = Astro.props;
+
+console.log("linkedin", linkedin);
 ---
 
 <header>
@@ -29,16 +31,13 @@ const { title, logoVideo, logoFallback = true } = Astro.props;
         </li>
       </ul>
     </li> -->
-    <li class="menu-item">
+    <!-- <li class="menu-item">
       <a href="#" title="external link" rel="external noopener noreferrer"
         >External Link</a
       >
-    </li>
+    </li> -->
     <li class="menu-item type-icon">
-      <a
-        href="https://github.com/markteekman/accessible-astro-starter"
-        title="Go to the GitHub page"
-      >
+      <a href={linkedin} title="Paul Kempe Linkedin">
         <Icon name="akar-icons:linkedin-fill" />
       </a>
     </li>

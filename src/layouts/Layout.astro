@@ -4,7 +4,7 @@ import "../assets/scss/global.scss";
 
 import { getSiteSettings } from "../sanity/lib/sanity";
 const siteSettings = await getSiteSettings();
-// console.log("siteSettings", siteSettings);
+console.log("siteSettings", siteSettings);
 
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
@@ -25,6 +25,7 @@ const visualEditingEnabled =
       title={siteSettings.title}
       logoVideo={siteSettings.logoVideo}
       logoFallback={siteSettings.logoFallback}
+      linkedin={siteSettings.socialAccounts[1].url}
     />
     <main id="main-content" transition:animate="fade">
       <slot />

@@ -35,25 +35,39 @@ const { data: post } = await loadQuery<{
 
 <Layout>
   <div class="container post">
-    <h1>{post.title}</h1>
-    {
-      post.featImage.asset && urlForImage(post.featImage).url() ? (
-        <Image
-          src={urlForImage(post.featImage).url()}
-          widths={[480, 960, 1440, 1920, 2560]}
-          inferSize
-          sizes="(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1080px) 720px, 1080px"
-          alt={post.title || ""}
-          class="post__image"
-        />
-      ) : null
-    }
+    <div class="post__header">
+      <h1 class="post__title">{post.title}</h1>
+      {
+        post.featImage.asset && urlForImage(post.featImage).url() ? (
+          <Image
+            src={urlForImage(post.featImage).url()}
+            widths={[480, 960, 1440, 1920, 2560]}
+            inferSize
+            sizes="(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1080px) 720px, 1080px"
+            alt={post.title || ""}
+            class="post__image"
+          />
+        ) : null
+      }
+    </div>
     <PortableText portableText={post.body} />
   </div>
 </Layout>
 
 <style lang="scss">
   .post {
+    &__header {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
+      gap: var(--space-xs);
+      align-items: end;
+      margin-bottom: var(--space-l);
+    }
+
+    &__title {
+      font-size: var(--fs-5);
+    }
+
     &__image {
       max-width: 100%;
       height: auto;

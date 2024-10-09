@@ -21,8 +21,6 @@ const schemaMarkup = {
     addressCountry: address.addressCountry || "",
   },
 };
-
-console.log("schemaMarkup", schemaMarkup);
 ---
 
 <script type="application/ld+json" set:html={JSON.stringify(schemaMarkup)} />
