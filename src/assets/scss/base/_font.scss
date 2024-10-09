@@ -100,6 +100,7 @@ body {
   h1,
   h2 {
     font-weight: 800;
+    letter-spacing: -0.075ch;
   }
 
   h3,
@@ -107,37 +108,36 @@ body {
   h5,
   h6 {
     font-weight: 600;
+    letter-spacing: -0.025ch;
   }
 
   h1 {
     font-size: var(--fs-6);
-    line-height: 100%;
+    line-height: 95%;
 
     @include breakpoint(medium) {
-      font-size: var(--fs-5);
-      line-height: 100%;
+      font-size: var(--fs-7);
+      line-height: 95%;
     }
   }
 
   h2 {
     font-size: var(--fs-5);
-    line-height: 112.5%;
-    margin-top: 1em;
+    line-height: 100%;
 
     @include breakpoint(medium) {
-      font-size: var(--fs-4);
+      font-size: var(--fs-6);
       line-height: 100%;
-
     }
   }
 
   h3 {
     font-size: var(--fs-4);
     line-height: 120%;
-    margin-top: 1em;
+    margin-top: 0.5em;
 
     @include breakpoint(medium) {
-      font-size: var(--fs-3);
+      font-size: var(--fs-5);
       line-height: 120%;
     }
   }
@@ -148,7 +148,7 @@ body {
     margin-top: 0.5em;
 
     @include breakpoint(medium) {
-      font-size: var(--fs-2);
+      font-size: var(--fs-4);
       line-height: 120%;
     }
   }
@@ -158,17 +158,14 @@ body {
     line-height: 120%;
     margin-top: 0.5em;
 
-
     @include breakpoint(medium) {
-      font-size: var(--fs-1);
+      font-size: var(--fs-3);
       line-height: 120%;
 
       h6 {
-        font-size: var(--fs-0);
+        font-size: var(--fs-1);
       }
     }
-
-
 
     @include breakpoint(medium) {
       font-size: var(--fs-2);
@@ -177,7 +174,7 @@ body {
   }
 
   p {
-    font-size: var(--fs-0);
+    font-size: var(--fs-1);
     line-height: 133%;
     margin-block: var(--space-xs);
 

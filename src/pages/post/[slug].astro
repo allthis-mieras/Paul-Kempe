@@ -34,7 +34,7 @@ const { data: post } = await loadQuery<{
 ---
 
 <Layout>
-  <div class="container">
+  <div class="container post">
     <h1>{post.title}</h1>
     {
       post.featImage.asset && urlForImage(post.featImage).url() ? (
@@ -43,11 +43,20 @@ const { data: post } = await loadQuery<{
           widths={[480, 960, 1440, 1920, 2560]}
           inferSize
           sizes="(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1080px) 720px, 1080px"
-          alt={post.title || "No title available"}
-          class="page__cover"
+          alt={post.title || ""}
+          class="post__image"
         />
       ) : null
     }
     <PortableText portableText={post.body} />
   </div>
 </Layout>
+
+<style lang="scss">
+  .post {
+    &__image {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+</style>
