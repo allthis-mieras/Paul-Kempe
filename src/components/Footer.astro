@@ -55,7 +55,12 @@ const year = new Date().getFullYear();
     align-items: center;
     justify-content: space-between;
     padding: 1rem;
-    font-size: 0.675rem;
+
+    font-family: var(--font-family-mono);
+
+    & p {
+      font-size: var(--fs--2);
+    }
   }
 
   a {

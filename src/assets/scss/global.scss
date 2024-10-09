@@ -31,7 +31,7 @@
         'DejaVu Sans Mono',
         monospace;
     // light theme
-    --font-color: var(--neutral-900);
+    --font-color: var(--primary-400);
     --background-full: #fff;
     --action-color: var(--primary-100);
     --action-color-state: var(--primary-500);
@@ -42,7 +42,7 @@
 
 // dark color scheme overrides
 .darkmode {
-    --font-color: #f1f1f1;
+    --font-color: #FF2E16;
     --background-full: #000;
     --action-color: var(--secondary-100);
     --action-color-state: var(--secondary-500);
