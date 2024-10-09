@@ -9,6 +9,7 @@ const siteSettings = await getSiteSettings();
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SiteMeta from "../components/siteMeta.astro";
+import SiteSchema from "../components/siteSchema.astro";
 
 import { VisualEditing } from "@sanity/astro/visual-editing";
 const visualEditingEnabled =
@@ -31,6 +32,7 @@ const visualEditingEnabled =
 
     <Footer title={siteSettings.title} timeZone={siteSettings.timezone} />
     <VisualEditing enabled={visualEditingEnabled} />
+    <SiteSchema />
   </body>
 </html>
 
