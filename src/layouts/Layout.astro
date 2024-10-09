@@ -11,7 +11,6 @@ import Footer from "../components/Footer.astro";
 import SiteMeta from "../components/siteMeta.astro";
 
 import { VisualEditing } from "@sanity/astro/visual-editing";
-
 const visualEditingEnabled =
   import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED == "true";
 ---
@@ -23,7 +22,7 @@ const visualEditingEnabled =
   <body class="darkmode">
     <Header
       title={siteSettings.title}
-      logoVideo={siteSettings.logo}
+      logoVideo={siteSettings.logoVideo}
       logoFallback={siteSettings.logoFallback}
     />
     <main id="main-content" transition:animate="fade">

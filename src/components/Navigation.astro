@@ -2,7 +2,6 @@
 import ResponsiveToggle from "./ResponsiveToggle.astro";
 import { DarkMode } from "accessible-astro-components";
 import { Image } from "astro:assets";
-// import logo from "../assets/img/logo.svg";
 
 import { urlForImage } from "../sanity/lib/urlForImage";
 import { urlForFile } from "../sanity/lib/urlForFile";
@@ -67,7 +66,8 @@ const { title, logoVideo, logoFallback = true } = Astro.props;
 
 <style lang="scss">
   .logo {
-    & video {
+    & video,
+    & img {
       width: auto;
       height: 96px;
     }

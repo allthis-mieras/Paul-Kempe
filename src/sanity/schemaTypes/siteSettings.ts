@@ -72,18 +72,7 @@ export const siteSettingsType = defineType({
         ],
       },
     }),
-    defineField({
-      name: "shareImage",
-      type: "image",
-      title: "Share Image",
-      group: "website",
-    }),
-    defineField({
-      name: "favicon",
-      type: "image",
-      title: "Favicon",
-      group: "website",
-    }),
+
     defineField({
       name: "logoVideo",
       type: "file",
@@ -102,6 +91,12 @@ export const siteSettingsType = defineType({
       group: "website",
     }),
     defineField({
+      name: "favicon",
+      type: "image",
+      title: "Favicon",
+      group: "website",
+    }),
+    defineField({
       name: "language",
       type: "string",
       title: "Language",
@@ -114,21 +109,21 @@ export const siteSettingsType = defineType({
         ],
       },
     }),
-    defineField({
-      name: "metaTags",
-      type: "array",
-      title: "Meta Tags",
-      group: "website",
-      of: [
-        {
-          type: "object",
-          fields: [
-            { name: "name", type: "string", title: "Name" },
-            { name: "content", type: "string", title: "Content" },
-          ],
-        },
-      ],
-    }),
+    // defineField({
+    //   name: "metaTags",
+    //   type: "array",
+    //   title: "Meta Tags",
+    //   group: "website",
+    //   of: [
+    //     {
+    //       type: "object",
+    //       fields: [
+    //         { name: "name", type: "string", title: "Name" },
+    //         { name: "content", type: "string", title: "Content" },
+    //       ],
+    //     },
+    //   ],
+    // }),
 
     // Analytics Group
     defineField({
@@ -158,6 +153,13 @@ export const siteSettingsType = defineType({
     }),
 
     // SEO & HTML Schema Options Group
+
+    defineField({
+      name: "shareImage",
+      type: "image",
+      title: "Share Image",
+      group: "seo",
+    }),
 
     defineField({
       name: "defaultPageTitle",

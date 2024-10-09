@@ -1,8 +1,11 @@
 ---
 import { ViewTransitions } from "astro:transitions";
+import { urlForImage } from "../sanity/lib/urlForImage";
 const { settings } = Astro.props;
 
-// console.log("settings", settings);
+console.log("settings", settings);
+console.log("Astro.generator", Astro.generator);
+console.log("ogUrl", settings.schemaMarkup[0].url);
 ---
 
 <meta charset="utf-8" />
@@ -11,17 +14,18 @@ const { settings } = Astro.props;
 <link rel="icon" type="image/svg+xml" href={settings.faviconUrl} />
 <meta name="viewport" content="width=device-width" />
 <meta name="generator" content={Astro.generator} />
-<!--  Essential META Tags -->
-<meta property="og:title" content={settings.defaultPageTitle} />
-<meta property="og:type" content="website" />
-<meta property="og:image" content={settings.shareImage} />
-<meta property="og:url" content={settings.ogUrl} />
-<meta name="twitter:card" content="summary_large_image" />
 
-<!--  Non-Essential, But Recommended -->
+<meta property="og:title" content={settings.defaultPageTitle} />
 <meta property="og:description" content={settings.defaultPageDescription} />
 <meta property="og:site_name" content={settings.defaultPageTitle} />
-<meta name="twitter:image:alt" content={settings.twitterImageAlt} />
+<meta property="og:type" content="website" />
+<meta property="og:image" content={urlForImage(settings.shareImage).url()} />
+<meta property="og:url" content={settings.schemaMarkup[0].url} />
+
+<meta name="twitter:title" content={settings.defaultPageTitle} />
+<meta name="twitter:description" content={settings.defaultPageDescription} />
+<meta name="twitter:image" content={urlForImage(settings.shareImage).url()} />
+<meta name="twitter:card" content="summary_large_image" />
 
 <!--  Non-Essential, But Required for Analytics -->
 <!-- <meta property="fb:app_id" content="your_app_id" /> -->
