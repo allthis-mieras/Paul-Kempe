@@ -8,79 +8,92 @@ import { loadQuery } from "../sanity/lib/load-query";
 import { urlForImage } from "../sanity/lib/urlForImage";
 import { PortableText } from "astro-portabletext";
 
+// Load homepage content
+const { data: homepage } = await loadQuery<{
+  title: string;
+  pageType: string;
+  showreelDesktop?: string;
+  posterImageDesktop?: string;
+  showreelMobile?: string;
+  posterImageMobile?: string;
+}>({
+  query: `*[_type == "pages" && pageType == "homepage"][0]`,
+});
+
+// Load about content
+const { data: about } = await loadQuery<{
+  title: string;
+  pageType: string;
+  body?: any;
+}>({
+  query: `*[_type == "pages" && pageType == "about"][0]`,
+});
+
+// Load contact content
+const { data: contact } = await loadQuery<{
+  title: string;
+  pageType: string;
+  contact?: any;
+}>({
+  query: `*[_type == "pages" && pageType == "contact"][0]`,
+});
+
+// Load posts
 const { data: posts } = await loadQuery<SanityDocument[]>({
   query: `*[_type == "post"][0...3]`,
 });
-const { data: pages } = await loadQuery<{
-  title: string;
-  pageType: string;
-  body?: string;
-  contact?: string;
-}>({
-  query: `*[_type == "pages"]`, // Haal alle pages op
-});
-
-// console.log("Posts:", posts);
-// console.log("Pages:", pages);
-console.log("Posts:", posts);
 ---
 
 <Layout>
   {
-    Array.isArray(pages) &&
-      pages
-        .sort((a, b) => {
-          const order = ["homepage", "about", "contact"];
-          return order.indexOf(a.pageType) - order.indexOf(b.pageType);
-        })
-        .map((page) => (
-          <div class="container">
-            <h2>{page.title}</h2>
+    homepage && (
+      <div class="container">
+        {/* <h2>{homepage.title}</h2> */}
+        {homepage.showreelDesktop &&
+          homepage.posterImageDesktop &&
+          homepage.showreelMobile &&
+          homepage.posterImageMobile && (
+            <div class="responsive-video">
+              <CustomVideoPlayer
+                videoUrl={homepage.showreelDesktop}
+                posterImage={homepage.posterImageDesktop}
+                aspectRatio="16/9"
+                class="desktop-video"
+              />
+              <CustomVideoPlayer
+                videoUrl={homepage.showreelMobile}
+                posterImage={homepage.posterImageMobile}
+                aspectRatio="9/16"
+                class="mobile-video"
+              />
+            </div>
+          )}
+        <pre>This is the homepage content.</pre>
+      </div>
+    )
+  }
 
-            {page.pageType === "homepage" && (
-              <div>
-                {page.showreelDesktop &&
-                  page.posterImageDesktop &&
-                  page.showreelMobile &&
-                  page.posterImageMobile && (
-                    <div class="responsive-video">
-                      <CustomVideoPlayer
-                        videoUrl={page.showreelDesktop}
-                        posterImage={page.posterImageDesktop}
-                        aspectRatio="16/9"
-                        class="desktop-video"
-                      />
-                      <CustomVideoPlayer
-                        videoUrl={page.showreelMobile}
-                        posterImage={page.posterImageMobile}
-                        aspectRatio="9/16"
-                        class="mobile-video"
-                      />
-                    </div>
-                  )}
+  {
+    about && (
+      <div class="container">
+        <h2>{about.title}</h2>
+        {about.body && <PortableText value={about.body} />}
+      </div>
+    )
+  }
 
-                <pre>This is the homepage content.</pre>
-              </div>
-            )}
-
-            {page.pageType === "about" && page.body && (
-              <div class="">
-                <PortableText value={page.body} />
-              </div>
-            )}
-
-            {page.pageType === "contact" && page.contact && (
-              <div>
-                <PortableText value={page.contact} />
-              </div>
-            )}
-          </div>
-        ))
+  {
+    contact && (
+      <div class="container">
+        <h2>{contact.title}</h2>
+        {contact.contact && <PortableText value={contact.contact} />}
+      </div>
+    )
   }
 
   <section class="container posts">
     <h2>Posts</h2>
-    <u>
+    <ul>
       {
         posts.map((post: SanityDocument) => (
           <li>
@@ -100,14 +113,13 @@ console.log("Posts:", posts);
           </li>
         ))
       }
-    </u>
+    </ul>
   </section>
 </Layout>
 
 <style lang="scss">
   .posts {
     display: grid;
-
     gap: 1rem;
     margin-top: 2rem;
 
