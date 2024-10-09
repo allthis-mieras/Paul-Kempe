@@ -4,66 +4,51 @@
 
 @use 'breakpoint' as *;
 
-// @font-face {
-//   font-family: 'DM Mono';
-//   src: local('DM Mono Medium'), local('DMMono-Medium'), url('/fonts/DMMono-Medium.woff2') format('woff2'),
-//     url('/fonts/DMMono-Medium.woff') format('woff');
-//   font-weight: normal;
-//   font-style: normal;
-//   font-display: swap;
-// }
+@font-face {
+  font-family: 'DM Mono';
+  src: local('DM Mono'), local('DMMono-Regular'), url('/fonts/DMMono-Regular.woff2') format('woff2'),
+    url('/fonts/DMMono-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
-// @font-face {
-//   font-family: 'Alte Haas';
-//   src: local('Alte Haas Regular'), local('AlteHaasGroteskRegular'), url('/fonts/AlteHaasGroteskRegular.woff2') format('woff2'),
-//     url('/fonts/AlteHaasGroteskRegular.woff') format('woff');
-//   font-weight: normal;
-//   font-style: normal;
-//   font-display: swap;
-// }
+@font-face {
+  font-family: 'DM Mono';
+  src: local('DM Mono'), local('DMMono-Italic'), url('/fonts/DMMono-Italic.woff2') format('woff2'),
+    url('/fonts/DMMono-Italic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
 
-// @font-face {
-//   font-family: 'Alte Haas';
-//   src: local('Alte Haas Bold'), local('AlteHaasGroteskBold'), url('/fonts/AlteHaasGroteskBold.woff2') format('woff2'),
-//     url('/fonts/AlteHaasGroteskBold.woff') format('woff');
-//   font-weight: bold;
-//   font-style: normal;
-//   font-display: swap;
-// }
+@font-face {
+  font-family: 'Sequel 100';
+  src: url('/fonts/Sequel100Black.woff2') format('woff2'),
+    url('/fonts/Sequel100Black.woff') format('woff');
+  font-weight: 128 470;
+  /* De minimum en maximum waarden voor gewicht */
+  font-style: normal;
+  font-display: swap;
 
-// @font-face {
-//   font-family: 'Alte Haas Sans';
-//   src: local('Open Sans Italic'), local('OpenSans-Italic'), url('/fonts/OpenSans-Italic.woff2') format('woff2'),
-//     url('/fonts/OpenSans-Italic.woff') format('woff');
-//   font-weight: normal;
-//   font-style: italic;
-//   font-display: swap;
-// }
+  /* Font variabele instellingen */
+  font-variation-settings: "wght" 128;
 
-// @font-face {
-//   font-family: 'Open Sans';
-//   src: local('Open Sans Bold'), local('OpenSans-Bold'), url('/fonts/OpenSans-Bold.woff2') format('woff2'),
-//     url('/fonts/OpenSans-Bold.woff') format('woff');
-//   font-weight: bold;
-//   font-style: normal;
-//   font-display: swap;
-// }
-
-// @font-face {
-//   font-family: 'Open Sans';
-//   src: local('Open Sans ExtraBold'), local('OpenSans-ExtraBold'), url('/fonts/OpenSans-ExtraBold.woff2') format('woff2'),
-//     url('/fonts/OpenSans-ExtraBold.woff') format('woff');
-//   font-weight: bold;
-//   font-style: normal;
-//   font-display: swap;
-// }
-
-
+  /* OpenType features */
+  font-feature-settings: var(--sequel-100-black-aalt),
+    var(--sequel-100-black-case),
+    var(--sequel-100-black-dlig),
+    var(--sequel-100-black-ordn),
+    var(--sequel-100-black-salt),
+    var(--sequel-100-black-ss01),
+    var(--sequel-100-black-sups),
+    var(--sequel-100-black-cpsp);
+}
 
 
 
 body {
-  font-family: var(--font-family-default);
+  font-family: var(--font-family-brand);
   text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
   text-rendering: optimizeLegibility;
   font-synthesis: none;

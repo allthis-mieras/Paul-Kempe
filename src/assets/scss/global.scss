@@ -20,9 +20,10 @@
         Arial,
         sans-serif;
     --font-family-default: 'Inter', sans-serif, var(--font-system);
+    --font-family-brand: 'Sequel 100', var(--font-system);
     --font-family-serif: "PT Serif", "Playfair Display", var(--font-system-serif),
         serif;
-    --font-family-mono: ui-monospace,
+    --font-family-mono: "DM Mono", ui-monospace,
         'Cascadia Code',
         'Source Code Pro',
         Menlo,
@@ -54,7 +55,7 @@
 html,
 body {
     height: 100%;
-    font-family: var(--font-family-default);
+
     overflow-x: hidden;
 }
 
@@ -73,7 +74,7 @@ body {
 }
 
 pre {
-    padding: var(--space-1xl);
+    padding: var(--space-xs);
     border-radius: 0.35em;
     border: 2px solid var(--action-color);
     margin-block: var(--space-xs);
