@@ -11,7 +11,7 @@ export async function getStaticPaths() {
     query: `*[_type == "post"]`,
   });
 
-  console.log(posts);
+  // console.log(posts);
   return posts.map(({ slug }) => {
     return {
       params: {

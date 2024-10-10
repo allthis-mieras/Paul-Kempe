@@ -37,6 +37,7 @@
     "sass": "^1.79.4",
     "sass-loader": "^16.0.2",
     "solid-js": "^1.9.2",
+    "styled-components": "^6.1.13",
     "typescript": "^5.5.4",
     "utopia-core": "^1.6.0",
     "utopia-core-scss": "^1.1.0"

@@ -1,5 +1,4 @@
 // src/sanity/schemaTypes/siteSettings.ts
-
 import { defineField, defineType } from "sanity";
 import { CustomStringInput } from "../componenents/CustomStringInput";
 
@@ -110,6 +109,7 @@ export const siteSettingsType = defineType({
         ],
       },
     }),
+
     // defineField({
     //   name: "metaTags",
     //   type: "array",
@@ -165,26 +165,27 @@ export const siteSettingsType = defineType({
     defineField({
       name: "defaultPageTitle",
       type: "string",
+      components: {
+        input: CustomStringInput, // Custom input component
+      },
       title: "Default Page Title",
       description: "The default title (max 60 characters) of your website",
       validation: (Rule) =>
         Rule.max(60).warning("SEO-best practice: around 60 characters max"),
-      components: {
-        input: CustomStringInput, // Custom input component
-      },
 
       group: "seo",
     }),
     defineField({
       name: "defaultPageDescription",
       type: "text",
+      components: {
+        input: CustomStringInput,
+      },
       title: "Default Page Description",
       description: "A short description (max 160 characters) of your website",
       validation: (Rule) =>
         Rule.max(160).warning("SEO-best practice: around 160 characters max"),
-      components: {
-        input: CustomStringInput,
-      },
+
       rows: 2,
       group: "seo",
     }),

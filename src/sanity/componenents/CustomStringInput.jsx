@@ -1,19 +1,12 @@
 import { useCallback } from 'react'
 import { Stack, Text, TextInput } from '@sanity/ui'
-import { useFormValue } from 'sanity'
-
-
 import { set, unset } from 'sanity'
 
 export const CustomStringInput = (props) => {
     const { elementProps, onChange, value = '', options } = props
     const docId = String(useFormValue(["_id"]));
 
-
-    // const docId = useGetFormValue(["_id"])
-    // Get maxLength and placeholder from options, with fallbacks
     const maxLength = options?.maxLength || 165
-    // const placeholder = options?.placeholder || 'TextInput'
 
     const handleChange = useCallback(
         (event) =>
