@@ -59,6 +59,37 @@ import { gsap } from "gsap";
         }
       });
     });
+
+    document.querySelectorAll('[data-cursor="video"]').forEach((element) => {
+      element.addEventListener("mouseenter", () => {
+        const circle = document.querySelector(".circle");
+        if (circle) {
+          const video = element.querySelector("video");
+          if (video) {
+            const isMuted = video.muted;
+            gsap.to(circle, { scale: 3.5, autoAlpha: 0.9, duration: 0.1 });
+            circle.textContent = isMuted ? "Unmute" : "Mute";
+          }
+        }
+      });
+      element.addEventListener("mouseleave", () => {
+        const circle = document.querySelector(".circle");
+        if (circle) {
+          gsap.to(circle, { scale: 1, autoAlpha: 0.7, duration: 0.3 });
+          circle.textContent = "";
+        }
+      });
+      element.addEventListener("click", () => {
+        const video = element.querySelector("video");
+        if (video) {
+          video.muted = !video.muted;
+          const circle = document.querySelector(".circle");
+          if (circle) {
+            circle.textContent = video.muted ? "Unmute" : "Mute";
+          }
+        }
+      });
+    });
   };
 
   onMount(() => {
