@@ -53,7 +53,7 @@ const { title, logoVideo, logoFallback = true } = Astro.props;
           <slot />
         </ul>
       </nav>
-      <DarkMode />
+      <DarkMode transition:persist />
       <ResponsiveToggle />
     </div>
     <nav class="mobile-menu" aria-label="Main navigation mobile">
@@ -76,6 +76,7 @@ const { title, logoVideo, logoFallback = true } = Astro.props;
 
 <script>
   // @ts-nocheck
+
   document.addEventListener("astro:page-load", () => {
     // variables
     const mainNav = document.querySelector("#main-navigation");
