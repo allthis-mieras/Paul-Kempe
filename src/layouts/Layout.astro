@@ -10,6 +10,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SiteMeta from "../components/siteMeta.astro";
 import SiteSchema from "../components/siteSchema.astro";
+import CustomCursor from "../components/customCursor.astro";
 
 import { VisualEditing } from "@sanity/astro/visual-editing";
 const visualEditingEnabled =
@@ -30,7 +31,7 @@ const visualEditingEnabled =
     <main id="main-content" transition:animate="fade">
       <slot />
     </main>
-
+    <CustomCursor />
     <Footer title={siteSettings.title} timeZone={siteSettings.timezone} />
     <VisualEditing enabled={visualEditingEnabled} />
     <SiteSchema />

@@ -1,0 +1,53 @@
+---
+// import type { SanityDocument } from "@sanity/client";
+import { loadQuery } from "../sanity/lib/load-query";
+import Layout from "../layouts/LayoutOverlay.astro";
+import { urlForImage } from "../sanity/lib/urlForImage";
+
+import { PortableText } from "astro-portabletext";
+import { Image } from "astro:assets";
+
+const { data: page } = await loadQuery<{
+  title: string;
+  body: any;
+  featImage: any;
+}>({
+  query: `*[_type == "pages" && pageType == "about"][0]`, // Fetch the first document
+});
+
+// console.log(page); // Debugging voor pages
+---
+
+<Layout>
+  <div class="container grid">
+    <div>
+      <h1>{page.title}</h1>
+      <PortableText value={page.body} />
+    </div>
+    {
+      page.featImage && (
+        <Image
+          src={urlForImage(page.featImage).url()}
+          widths={[480, 960, 1440, 1920, 2560]}
+          inferSize
+          sizes="(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1080px) 720px, 1080px"
+          alt={page.title}
+          class="page__cover"
+        />
+      )
+    }
+  </div>
+</Layout>
+
+<style lang="scss">
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1vw;
+
+    & img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+</style>

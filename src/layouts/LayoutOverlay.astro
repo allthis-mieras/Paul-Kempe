@@ -1,0 +1,11 @@
+---
+import { VisualEditing } from "@sanity/astro/visual-editing";
+const visualEditingEnabled =
+  import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED == "true";
+---
+
+<main id="main-content" transition:animate="fade">
+  <slot />
+</main>
+
+<style></style>

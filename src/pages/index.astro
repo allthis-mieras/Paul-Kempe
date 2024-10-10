@@ -45,76 +45,78 @@ const { data: posts } = await loadQuery<SanityDocument[]>({
 ---
 
 <Layout>
-  {
-    homepage && (
-      <div class="container">
-        {/* <h2>{homepage.title}</h2> */}
-        {homepage.showreelDesktop &&
-          homepage.posterImageDesktop &&
-          homepage.showreelMobile &&
-          homepage.posterImageMobile && (
-            <div class="responsive-video">
-              <CustomVideoPlayer
-                videoUrl={homepage.showreelDesktop}
-                posterImage={homepage.posterImageDesktop}
-                aspectRatio="16/9"
-                class="desktop-video"
-              />
-              <CustomVideoPlayer
-                videoUrl={homepage.showreelMobile}
-                posterImage={homepage.posterImageMobile}
-                aspectRatio="9/16"
-                class="mobile-video"
-              />
-            </div>
-          )}
-        <pre>This is the homepage content.</pre>
-      </div>
-    )
-  }
-
-  {
-    about && (
-      <div class="container">
-        <h2>{about.title}</h2>
-        {about.body && <PortableText value={about.body} />}
-      </div>
-    )
-  }
-
-  {
-    contact && (
-      <div class="container">
-        <h2>{contact.title}</h2>
-        {contact.contact && <PortableText value={contact.contact} />}
-      </div>
-    )
-  }
-
-  <section class="container posts">
-    <h2>Posts</h2>
-    <ul>
-      {
-        posts.map((post: SanityDocument) => (
-          <li>
-            <a href={`post/${post.slug.current}`}>
-              <h3>{post.title}</h3>
-            </a>
-            {post.featImage.asset && (
-              <Image
-                src={urlForImage(post.featImage).url()}
-                widths={[480, 960, 1440, 1920, 2560]}
-                inferSize
-                sizes="(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1080px) 720px, 1080px"
-                alt={post.title}
-                class="page__cover"
-              />
+  <div class="homepage">
+    {
+      homepage && (
+        <div class="container">
+          {/* <h2>{homepage.title}</h2> */}
+          {homepage.showreelDesktop &&
+            homepage.posterImageDesktop &&
+            homepage.showreelMobile &&
+            homepage.posterImageMobile && (
+              <div class="responsive-video">
+                <CustomVideoPlayer
+                  videoUrl={homepage.showreelDesktop}
+                  posterImage={homepage.posterImageDesktop}
+                  aspectRatio="16/9"
+                  class="desktop-video"
+                />
+                <CustomVideoPlayer
+                  videoUrl={homepage.showreelMobile}
+                  posterImage={homepage.posterImageMobile}
+                  aspectRatio="9/16"
+                  class="mobile-video"
+                />
+              </div>
             )}
-          </li>
-        ))
-      }
-    </ul>
-  </section>
+          <pre>This is the homepage content.</pre>
+        </div>
+      )
+    }
+
+    {
+      about && (
+        <div class="container">
+          <h2>{about.title}</h2>
+          {about.body && <PortableText value={about.body} />}
+        </div>
+      )
+    }
+
+    {
+      contact && (
+        <div class="container">
+          <h2>{contact.title}</h2>
+          {contact.contact && <PortableText value={contact.contact} />}
+        </div>
+      )
+    }
+
+    <section class="container posts">
+      <h2>Posts</h2>
+      <ul>
+        {
+          posts.map((post: SanityDocument) => (
+            <li>
+              <a href={`post/${post.slug.current}`}>
+                <h3>{post.title}</h3>
+              </a>
+              {post.featImage.asset && (
+                <Image
+                  src={urlForImage(post.featImage).url()}
+                  widths={[480, 960, 1440, 1920, 2560]}
+                  inferSize
+                  sizes="(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1080px) 720px, 1080px"
+                  alt={post.title}
+                  class="page__cover"
+                />
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
 </Layout>
 
 <style lang="scss">

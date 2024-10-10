@@ -1,0 +1,68 @@
+---
+import { gsap } from "gsap";
+---
+
+<div class="circle"></div>
+
+<button data-cursor="hover">Click me</button>
+
+<style>
+  .circle {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    top: 0;
+    left: 0;
+    background: var(--font-color);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.7;
+    transform: translate(-50%, -50%);
+  }
+</style>
+
+<script>
+  import { onMount } from "solid-js";
+
+  let circle: HTMLElement;
+
+  import { gsap } from "gsap";
+
+  // Set initial position of the circle
+  gsap.set(".circle", { xPercent: -50, yPercent: -50 });
+
+  // Create quickTo functions for smoother animation
+  let xTo = gsap.quickTo(".circle", "x", { duration: 0.6, ease: "power3" }),
+    yTo = gsap.quickTo(".circle", "y", { duration: 0.6, ease: "power3" });
+
+  // Function to move the circle
+  const moveCircle = (e: MouseEvent) => {
+    xTo(e.clientX);
+    yTo(e.clientY);
+  };
+
+  // Function to add hover listeners
+  const addHoverListeners = () => {
+    document.querySelectorAll('[data-cursor="hover"]').forEach((element) => {
+      element.addEventListener("mouseenter", () => {
+        const circle = document.querySelector(".circle");
+        if (circle) {
+          gsap.to(circle, { scale: 3.5, autoAlpha: 0.9, duration: 0.1 });
+          console.log("hover");
+        }
+      });
+      element.addEventListener("mouseleave", () => {
+        const circle = document.querySelector(".circle");
+        if (circle) {
+          gsap.to(circle, { scale: 1, autoAlpha: 0.7, duration: 0.3 });
+        }
+      });
+    });
+  };
+
+  onMount(() => {
+    window.addEventListener("mousemove", moveCircle);
+    addHoverListeners();
+  });
+</script>
