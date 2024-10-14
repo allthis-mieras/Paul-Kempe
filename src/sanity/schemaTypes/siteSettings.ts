@@ -1,6 +1,6 @@
 // src/sanity/schemaTypes/siteSettings.ts
 import { defineField, defineType } from "sanity";
-import { CustomStringInput } from "../componenents/CustomStringInput";
+// import { CustomStringInput } from "../componenents/CustomStringInput";
 
 export const siteSettingsType = defineType({
   name: "siteSettings",
