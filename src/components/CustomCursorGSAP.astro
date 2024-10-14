@@ -85,9 +85,10 @@
             element.addEventListener("mouseenter", () => {
               const cursor = document.querySelector(".cursor");
               if (cursor) {
-                const videoItem = element.querySelector(".video");
-                if (videoItem) {
-                  const isMuted = videoItem.muted;
+                const video = element.querySelectorAll(".video");
+                console.log("video", video);
+                if (video) {
+                  const isMuted = video.muted;
                   gsap.to(cursor, {
                     scale: 3.5,
                     autoAlpha: 0.9,
@@ -106,12 +107,13 @@
             });
 
             element.addEventListener("click", () => {
-              const videoItem = element.querySelector(".video");
-              if (videoItem) {
-                videoItem.muted = !videoItem.muted;
+              const video = element.querySelectorAll(".video");
+              if (video) {
+                console.log("video", video);
+                video.muted = !video.muted;
                 const cursor = document.querySelector(".cursor");
                 if (cursor) {
-                  cursor.textContent = videoItem.muted ? "Unmute" : "Mute";
+                  cursor.textContent = video.muted ? "Unmute" : "Mute";
                 }
               }
             });
@@ -147,5 +149,5 @@
   document.addEventListener("astro:page-load", initializeCursor, {
     once: false,
   });
-  document.addEventListener("astro:after-swap", initializeCursor);
+  document.addEventListener("astro:afer-swap", initializeCursor);
 </script>
