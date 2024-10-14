@@ -165,9 +165,9 @@ export const siteSettingsType = defineType({
     defineField({
       name: "defaultPageTitle",
       type: "string",
-      components: {
-        input: CustomStringInput, // Custom input component
-      },
+      // components: {
+      //   input: CustomStringInput, // Custom input component
+      // },
       title: "Default Page Title",
       description: "The default title (max 60 characters) of your website",
       validation: (Rule) =>
@@ -178,9 +178,9 @@ export const siteSettingsType = defineType({
     defineField({
       name: "defaultPageDescription",
       type: "text",
-      components: {
-        input: CustomStringInput,
-      },
+      // components: {
+      //   input: CustomStringInput,
+      // },
       title: "Default Page Description",
       description: "A short description (max 160 characters) of your website",
       validation: (Rule) =>

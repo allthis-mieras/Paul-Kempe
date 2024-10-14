@@ -2,7 +2,8 @@
 import { urlForImage } from "../sanity/lib/urlForImage";
 const {
   class: className,
-  videoUrl,
+  videoUrlDesktop,
+  videoUrlMobile,
   posterImage,
   aspectRatio,
   ...rest
@@ -13,18 +14,19 @@ const {
   <video
     style={`--aspect-ratio: ${aspectRatio}`}
     class={className}
-    controls
     autoplay
     playsinline
     loop
     muted
     poster={urlForImage(posterImage).url()}
     data-cursor="video"
+    data-desktop-vid={videoUrlDesktop}
+    data-mobile-vid={videoUrlMobile}
     {...rest}
   >
-    <source src={videoUrl} type="video/mp4" />
     Your browser does not support the video tag.
   </video>
+  <button id="audio-control" class="muted">Unmute</button>
 </div>
 
 <style lang="scss">
@@ -62,4 +64,59 @@ const {
   }
 </style>
 
-<script></script>
+<script>
+  //@ts-nocheck
+  // Get all videos and the audio control button
+  const videos = document.querySelectorAll("video");
+  const audioControlButton = document.getElementById("audio-control");
+
+  function toggleMute(video) {
+    video.muted = !video.muted;
+    audioControlButton.textContent = video.muted ? "Unmute" : "Mute";
+    console.log("video muted", video.muted);
+  }
+
+  // Add event listener to each video
+  videos.forEach((video) => {
+    video.addEventListener("click", function (e) {
+      e.preventDefault();
+      toggleMute(video);
+    });
+  });
+
+  // Add event listener to the audio control button
+  audioControlButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    videos.forEach((video) => toggleMute(video));
+  });
+
+  // Add source to video tag
+  function addSourceToVideo(element, src) {
+    var source = document.createElement("source");
+    source.src = src;
+    source.type = "video/mp4";
+    console.log(src);
+    element.appendChild(source);
+  }
+
+  // Determine screen size and select mobile or desktop video
+  function whichSizeVideo(element, src) {
+    var windowWidth = window.innerWidth ? window.innerWidth : $(window).width();
+    if (windowWidth > 1200) {
+      addSourceToVideo(element, src.dataset.desktopVid);
+    } else {
+      addSourceToVideo(element, src.dataset.mobileVid);
+    }
+  }
+
+  // Initialize only if page has videos
+  function videoSize() {
+    if (videos.length > 0) {
+      videos.forEach(function (element) {
+        whichSizeVideo(element, element);
+      });
+    }
+  }
+
+  document.addEventListener("astro:page-load", videoSize);
+</script>

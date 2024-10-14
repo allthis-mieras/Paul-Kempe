@@ -56,16 +56,12 @@ const { data: posts } = await loadQuery<SanityDocument[]>({
             homepage.posterImageMobile && (
               <div class="responsive-video">
                 <CustomVideoPlayer
-                  videoUrl={homepage.showreelDesktop}
+                  id="custom-video-player"
+                  videoUrlMobile={homepage.showreelMobile}
+                  videoUrlDesktop={homepage.showreelDesktop}
                   posterImage={homepage.posterImageDesktop}
                   aspectRatio="16/9"
-                  class="desktop-video"
-                />
-                <CustomVideoPlayer
-                  videoUrl={homepage.showreelMobile}
-                  posterImage={homepage.posterImageMobile}
-                  aspectRatio="9/16"
-                  class="mobile-video"
+                  class="video"
                 />
               </div>
             )}
@@ -138,3 +134,5 @@ const { data: posts } = await loadQuery<SanityDocument[]>({
     }
   }
 </style>
+
+<script></script>

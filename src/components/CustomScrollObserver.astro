@@ -1,0 +1,66 @@
+---
+
+---
+
+<style is:global>
+  @keyframes fade {
+    0% {
+      opacity: 0;
+      transform: translate(0, 3rem);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+
+  /* Add animation when element comes into view */
+  .in-view {
+    animation: fade 0.6s ease forwards;
+  }
+
+  /* Optionally style elements that are out of view */
+  .not-in-view {
+    opacity: 0;
+  }
+</style>
+
+<script>
+  export let tags = ["figure", "h1", "h2", "h3", "div"]; // Default tags to observe
+
+  function initializeObserver() {
+    // Intersection Observer setup
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            entry.target.classList.remove("not-in-view");
+          } else {
+            entry.target.classList.remove("in-view");
+            entry.target.classList.add("not-in-view");
+          }
+        });
+      },
+      {
+        rootMargin: "0px",
+        threshold: [0, 0.1, 1],
+      }
+    );
+
+    // Observe all elements that match the tags within <main>
+    const mainContent = document.querySelector("main");
+    if (mainContent) {
+      tags.forEach((tag) => {
+        const elements = mainContent.querySelectorAll(tag);
+        elements.forEach((element) => {
+          observer.observe(element);
+        });
+      });
+    }
+  }
+
+  document.addEventListener("astro:page-load", initializeObserver, {
+    once: false,
+  });
+</script>

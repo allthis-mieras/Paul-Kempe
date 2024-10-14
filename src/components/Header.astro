@@ -11,11 +11,11 @@ const { title, logoVideo, logoFallback = true, linkedin } = Astro.props;
 <header>
   <SkipLinks />
   <Navigation title={title} logoVideo={logoVideo} logoFallback={logoFallback}>
-    <li class="menu-item">
+    <li class="menu-item" data-cursor="hover">
       <a href="/">Home</a>
     </li>
-    <li class="menu-item">
-      <a href="/about/">Information</a>
+    <li class="menu-item" data-cursor="hover">
+      <a href=" about "> Information </a>
     </li>
 
     <!-- <li class="menu-item has-dropdown">
@@ -43,30 +43,30 @@ const { title, logoVideo, logoFallback = true, linkedin } = Astro.props;
       </a>
     </li>
   </Navigation>
-</header>
 
-<style lang="scss" is:global>
-  @use "../assets/scss/base/outline" as *;
+  <style lang="scss" is:global>
+    @use "../assets/scss/base/outline" as *;
 
-  header {
-    .type-icon a {
-      display: block;
+    header {
+      .type-icon a {
+        display: block;
 
-      [data-icon] {
-        height: auto;
-        margin-top: -4px;
-        width: 30px;
+        [data-icon] {
+          height: auto;
+          margin-top: -4px;
+          width: 30px;
 
-        path {
-          fill: var(--action-color);
+          path {
+            fill: var(--action-color);
+          }
         }
-      }
 
-      &:hover {
-        [data-icon] path {
-          fill: var(--action-color-state);
+        &:hover {
+          [data-icon] path {
+            fill: var(--action-color-state);
+          }
         }
       }
     }
-  }
-</style>
+  </style>
+</header>
