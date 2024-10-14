@@ -88,13 +88,13 @@
                 const video = element.querySelectorAll(".video");
                 console.log("video", video);
                 if (video) {
-                  const isMuted = video.muted;
+                  // const isMuted = video.muted;
                   gsap.to(cursor, {
                     scale: 3.5,
                     autoAlpha: 0.9,
                     duration: 0.1,
                   });
-                  cursor.textContent = isMuted ? "Unmute" : "Mute";
+                  // cursor.textContent = isMuted ? "Unmute" : "Mute";
                 }
               }
             });
@@ -110,10 +110,10 @@
               const video = element.querySelectorAll(".video");
               if (video) {
                 console.log("video", video);
-                video.muted = !video.muted;
+                // video.muted = !video.muted;
                 const cursor = document.querySelector(".cursor");
                 if (cursor) {
-                  cursor.textContent = video.muted ? "Unmute" : "Mute";
+                  // cursor.textContent = video.muted ? "Unmute" : "Mute";
                 }
               }
             });
