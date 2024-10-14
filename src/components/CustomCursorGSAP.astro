@@ -85,10 +85,9 @@
             element.addEventListener("mouseenter", () => {
               const cursor = document.querySelector(".cursor");
               if (cursor) {
-                const video = element.querySelectorAll("video");
-                console.log("video", video[0]);
-                if (video) {
-                  const isMuted = video.length > 0 ? video[0].muted : false;
+                const videoItem = element.querySelector(".video");
+                if (videoItem) {
+                  const isMuted = videoItem.muted;
                   gsap.to(cursor, {
                     scale: 3.5,
                     autoAlpha: 0.9,
@@ -107,32 +106,15 @@
             });
 
             element.addEventListener("click", () => {
-              const video = element.querySelector("video");
-              if (video) {
-                console.log("video", video);
-                video.muted = !video.muted;
+              const videoItem = element.querySelector(".video");
+              if (videoItem) {
+                videoItem.muted = !videoItem.muted;
                 const cursor = document.querySelector(".cursor");
                 if (cursor) {
-                  cursor.textContent = video.muted ? "Unmute" : "Mute";
+                  cursor.textContent = videoItem.muted ? "Unmute" : "Mute";
                 }
               }
             });
-
-            // element.addEventListener("mouseenter", () => {
-            //   const cursor = document.querySelector(".cursor");
-            //   if (cursor) {
-            //     const video = element.querySelector("video");
-            //     if (video) {
-            //       const isMuted = video.muted;
-            //       gsap.to(cursor, {
-            //         scale: 3.5,
-            //         autoAlpha: 0.9,
-            //         duration: 0.1,
-            //       });
-            //       cursor.textContent = isMuted ? "Unmute" : "Mute";
-            //     }
-            //   }
-            // });
           });
       };
 
@@ -165,4 +147,5 @@
   document.addEventListener("astro:page-load", initializeCursor, {
     once: false,
   });
+  document.addEventListener("astro:after-swap", initializeCursor);
 </script>
