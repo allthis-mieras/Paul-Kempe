@@ -28,7 +28,18 @@
 
   import { gsap } from "gsap";
 
+  const isTouchDevice =
+    "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
   const initializeCursor = () => {
+    const cursor = document.querySelector(".cursor");
+    if (isTouchDevice || !cursor) {
+      if (cursor) {
+        (cursor as HTMLElement).style.display = "none";
+      }
+      return;
+    }
+
     const ctx = gsap.context(() => {
       // Set initial position of the cursor
       gsap.set(".cursor", {
