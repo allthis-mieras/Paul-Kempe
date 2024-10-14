@@ -21,7 +21,7 @@ const year = new Date().getFullYear();
   <p>website: <a href="#">allthis.digital</a></p>
 </footer>
 
-<script define:vars={{ timeZone }}>
+<script is:inline define:vars={{ timeZone }}>
   const showDate = false; // Set this to false to hide the date
 
   const updateLocalTime = () => {

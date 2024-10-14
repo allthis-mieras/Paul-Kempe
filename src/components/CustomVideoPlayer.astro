@@ -63,60 +63,66 @@ const {
     }
   }
 </style>
-
-<script>
+<script is:inline>
   //@ts-nocheck
   // Get all videos and the audio control button
-  const videos = document.querySelectorAll("video");
-  const audioControlButton = document.getElementById("audio-control");
+  function initializeVideoPlayer() {
+    const videos = document.querySelectorAll("video");
+    const audioControlButton = document.getElementById("audio-control");
 
-  function toggleMute(video) {
-    video.muted = !video.muted;
-    audioControlButton.textContent = video.muted ? "Unmute" : "Mute";
-    console.log("video muted", video.muted);
-  }
-
-  // Add event listener to each video
-  videos.forEach((video) => {
-    video.addEventListener("click", function (e) {
-      e.preventDefault();
-      toggleMute(video);
-    });
-  });
-
-  // Add event listener to the audio control button
-  audioControlButton.addEventListener("click", function (e) {
-    e.preventDefault();
-    videos.forEach((video) => toggleMute(video));
-  });
-
-  // Add source to video tag
-  function addSourceToVideo(element, src) {
-    var source = document.createElement("source");
-    source.src = src;
-    source.type = "video/mp4";
-    console.log(src);
-    element.appendChild(source);
-  }
-
-  // Determine screen size and select mobile or desktop video
-  function whichSizeVideo(element, src) {
-    var windowWidth = window.innerWidth ? window.innerWidth : $(window).width();
-    if (windowWidth > 1200) {
-      addSourceToVideo(element, src.dataset.desktopVid);
-    } else {
-      addSourceToVideo(element, src.dataset.mobileVid);
+    function toggleMute(video) {
+      video.muted = !video.muted;
+      audioControlButton.textContent = video.muted ? "Unmute" : "Mute";
+      console.log("video muted", video.muted);
     }
-  }
 
-  // Initialize only if page has videos
-  function videoSize() {
-    if (videos.length > 0) {
-      videos.forEach(function (element) {
-        whichSizeVideo(element, element);
+    // Add event listener to each video
+    videos.forEach((video) => {
+      video.addEventListener("click", function (e) {
+        e.preventDefault();
+        toggleMute(video);
       });
+    });
+
+    // Add event listener to the audio control button
+    audioControlButton.addEventListener("click", function (e) {
+      e.preventDefault();
+      videos.forEach((video) => toggleMute(video));
+    });
+
+    // Add source to video tag
+    function addSourceToVideo(element, src) {
+      var source = document.createElement("source");
+      source.src = src;
+      source.type = "video/mp4";
+      console.log(src);
+      element.appendChild(source);
     }
+
+    // Determine screen size and select mobile or desktop video
+    function whichSizeVideo(element, src) {
+      var windowWidth = window.innerWidth
+        ? window.innerWidth
+        : $(window).width();
+      if (windowWidth > 1200) {
+        addSourceToVideo(element, src.dataset.desktopVid);
+      } else {
+        addSourceToVideo(element, src.dataset.mobileVid);
+      }
+    }
+
+    // Initialize only if page has videos
+    function videoSize() {
+      if (videos.length > 0) {
+        videos.forEach(function (element) {
+          whichSizeVideo(element, element);
+        });
+      }
+    }
+
+    videoSize();
   }
 
-  document.addEventListener("astro:page-load", videoSize);
+  document.addEventListener("astro:page-load", initializeVideoPlayer);
+  document.addEventListener("astro:after-swap", initializeVideoPlayer);
 </script>
