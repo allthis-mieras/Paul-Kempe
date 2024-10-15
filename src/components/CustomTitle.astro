@@ -1,0 +1,25 @@
+---
+const { textInput } = Astro.props;
+const plainText = textInput.toString();
+---
+
+<h1 class="slide-vertical" data-splitting>{plainText}</h1>
+
+<style>
+  * {
+    z-index: 9999;
+    height: auto;
+    border: 1px solid red;
+  }
+  .char {
+    display: inline-block;
+  }
+</style>
+
+<script>
+  import Splitting from "splitting";
+  Splitting();
+
+  document.addEventListener("astro:page-load", Splitting(), {});
+  document.addEventListener("astro:afer-swap", Splitting());
+</script>

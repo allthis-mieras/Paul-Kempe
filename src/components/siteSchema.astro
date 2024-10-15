@@ -1,9 +1,7 @@
 ---
 import { getSiteSettings } from "../sanity/lib/sanity";
 const siteSettings = await getSiteSettings();
-// console.log("SchemaMarkup", siteSettings.schemaMarkup[0]);
 const schemaInput = siteSettings.schemaMarkup[0];
-
 const address = schemaInput.address || {};
 
 const schemaMarkup = {

@@ -1,0 +1,51 @@
+---
+export let textInput = "";
+---
+
+<div class="text">
+  <p>{textInput}</p>
+</div>
+
+<style>
+  .text > p {
+    background: linear-gradient(
+      to right,
+      rgb(255, 255, 255) 50%,
+      rgb(37, 37, 37) 50%
+    );
+    background-size: 200% 100%;
+    background-position-x: 100%;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    margin-left: 50px;
+    line-height: 1.2;
+    font-size: 10vw;
+  }
+</style>
+
+<!-- <script>
+  // import { gsap } from "gsap";
+  // import { ScrollTrigger } from "gsap/ScrollTrigger";
+  // import { SplitText } from "gsap/SplitText";
+
+  // gsap.registerPlugin(ScrollTrigger, SplitText);
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const split = new SplitText("p", { type: "lines" });
+
+    split.lines.forEach((target) => {
+      gsap.to(target, {
+        backgroundPositionX: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: target,
+          markers: true,
+          scrub: 1,
+          start: "top center",
+          end: "bottom center",
+        },
+      });
+    });
+  });
+</script> -->

@@ -1,65 +1,40 @@
 ---
+import CustomClock from "./CustomClock.astro";
+
 const { title, showDate, timeZone = true } = Astro.props;
-// console.log("timeZone", timeZone);
-const getLocalTime = (showDate: boolean) => {
-  const now = new Date();
-  const options = { timeZone: timeZone || "Europe/Amsterdam", hour12: false };
-  let localTime = now.toLocaleString("nl-NL", options).replace("T", " ");
-  const milliseconds = now.getMilliseconds().toString().padStart(3, "0");
-  if (!showDate) {
-    localTime = localTime.split(" ")[1]; // Remove the date part
-  }
-  return `${localTime}:${milliseconds}`;
-};
 
 const year = new Date().getFullYear();
 ---
 
 <footer>
-  <p>{year} © {title}</p>
-  <p id="local-time">{getLocalTime(showDate)}</p>
-  <p>website: <a href="#">allthis.digital</a></p>
+  <div class="year"><p>{year} © {title}</p></div>
+  <div class="timezone">
+    <CustomClock timeZone={timeZone} showDate={showDate} />
+  </div>
+  <div class="credits"><p>website: <a href="#">allthis.digital</a></p></div>
 </footer>
 
-<script is:inline define:vars={{ timeZone }}>
-  const showDate = false; // Set this to false to hide the date
-
-  const updateLocalTime = () => {
-    const getLocalTime = (showDate) => {
-      const now = new Date();
-      const options = {
-        timeZone: timeZone || "Europe/Amsterdam",
-        hour12: false,
-      };
-      let localTime = now.toLocaleString("nl-NL", options).replace("T", " ");
-      const milliseconds = now.getMilliseconds().toString().padStart(3, "0");
-      if (!showDate) {
-        localTime = localTime.split(" ")[1]; // Remove the date part
-      }
-      return `${localTime}:${milliseconds}`;
-    };
-
-    const localTimeElement = document.getElementById("local-time");
-    if (localTimeElement) {
-      localTimeElement.textContent = getLocalTime(showDate);
-    }
-  };
-
-  setInterval(updateLocalTime, 10); // Update Time
-</script>
-
-<style>
+<style lang="scss">
   footer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     padding: 1rem;
 
     font-family: var(--font-family-mono);
 
-    & p {
+    p {
       font-size: var(--fs--2);
+      margin: 0; // Added missing value for margin
+    }
+    div {
+      justify-self: center;
+    }
+
+    div:nth-child(1) {
+      justify-self: start;
+    }
+    div:last-child {
+      justify-self: end;
     }
   }
 
