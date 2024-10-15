@@ -20,6 +20,6 @@ const plainText = textInput.toString();
   import Splitting from "splitting";
   Splitting();
 
-  document.addEventListener("astro:page-load", Splitting(), {});
-  document.addEventListener("astro:afer-swap", Splitting());
+  document.addEventListener("astro:page-load", () => Splitting());
+  document.addEventListener("astro:after-swap", () => Splitting());
 </script>
