@@ -20,7 +20,7 @@
         Arial,
         sans-serif;
     --font-family-default: 'Inter', sans-serif, var(--font-system);
-    --font-family-brand: 'Sequel 100', var(--font-system);
+    --font-family-brand: 'Sequel', var(--font-system);
     --font-family-serif: "PT Serif", "Playfair Display", var(--font-system-serif),
         serif;
     --font-family-mono: "DM Mono", ui-monospace,
@@ -33,7 +33,7 @@
     // light theme
     --clr-brand: #FF2E16;
     --font-color: var(--primary-400);
-    --background-full: #fff;
+    --background-rgb: 255, 255, 255; // use with rgba
     --action-color: var(--primary-100);
     --action-color-state: var(--primary-500);
     --background: var(--neutral-100);
@@ -44,7 +44,7 @@
 // dark color scheme overrides
 .darkmode {
     --font-color: #FF2E16;
-    --background-full: #000;
+    --background-rgb: 0, 0, 0; // use with rgba
     --action-color: var(--secondary-100);
     --action-color-state: var(--secondary-500);
     --background: #000;
@@ -58,6 +58,9 @@ body {
     height: 100%;
 
     overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+
 }
 
 body {

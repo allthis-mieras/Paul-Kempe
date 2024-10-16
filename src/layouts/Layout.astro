@@ -5,6 +5,7 @@ import "../assets/scss/global.scss";
 import { getSiteSettings } from "../sanity/lib/sanity";
 const siteSettings = await getSiteSettings();
 // console.log("siteSettings", siteSettings);
+// console.log("IG", siteSettings.socialAccounts[0]);
 
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
@@ -12,7 +13,6 @@ import SiteMeta from "../components/siteMeta.astro";
 import SiteSchema from "../components/siteSchema.astro";
 import CustomCursor from "../components/CustomCursorGSAP.astro";
 import CustomScrollObserver from "../components/CustomScrollObserver.astro";
-import CustomTitle from "../components/CustomTitle.astro";
 
 import { VisualEditing } from "@sanity/astro/visual-editing";
 const visualEditingEnabled =
@@ -28,7 +28,7 @@ const visualEditingEnabled =
       title={siteSettings.title}
       logoVideo={siteSettings.logoVideo}
       logoFallback={siteSettings.logoFallback}
-      linkedin={siteSettings.socialAccounts[1].url}
+      social={siteSettings.socialAccounts[0]}
     />
     <main id="main-content" transition:animate="fade">
       <slot />

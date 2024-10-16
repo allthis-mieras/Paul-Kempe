@@ -22,17 +22,53 @@
   font-display: swap;
 }
 
+
+@font-face {
+  font-family: "Sequel";
+  src: url("/fonts/Sequel100Black.woff2") format("woff2 supports variations"),
+    url("/fonts/Sequel100Black.woff2") format("woff2-variations");
+  font-weight: 124 470;
+  font-display: swap;
+
+  font-feature-settings: var(--sequel-100-black-aalt),
+    var(--sequel-100-black-case),
+    var(--sequel-100-black-dlig),
+    var(--sequel-100-black-ordn),
+    var(--sequel-100-black-salt),
+    var(--sequel-100-black-ss01),
+    var(--sequel-100-black-sups),
+    var(--sequel-100-black-cpsp);
+}
+
+@font-face {
+  font-family: "Sequel";
+  src: url("/fonts/Sequel100BlackVFIt.woff2") format("woff2 supports variations"),
+    url("/fonts/Sequel100BlackVFIt.woff2") format("woff2-variations");
+  font-weight: 124 470;
+  font-style: italic;
+  font-display: swap;
+
+  font-feature-settings: var(--sequel-100-black-aalt),
+    var(--sequel-100-black-case),
+    var(--sequel-100-black-dlig),
+    var(--sequel-100-black-ordn),
+    var(--sequel-100-black-salt),
+    var(--sequel-100-black-ss01),
+    var(--sequel-100-black-sups),
+    var(--sequel-100-black-cpsp);
+}
+
 @font-face {
   font-family: 'Sequel 100';
-  src: url('/fonts/Sequel100Black.woff2') format('woff2'),
+  src: url('/fonts/Sequel100Black.ttf') format('ttf'),
     url('/fonts/Sequel100Black.woff') format('woff');
-  font-weight: 128 470;
+  font-weight: 124 470;
   /* De minimum en maximum waarden voor gewicht */
-  font-style: normal;
+
   font-display: swap;
 
   /* Font variabele instellingen */
-  font-variation-settings: "wght" 128;
+  // font-variation-settings: "wght" 424;
 
   /* OpenType features */
   font-feature-settings: var(--sequel-100-black-aalt),
@@ -84,20 +120,20 @@ body {
 
   h1,
   h2 {
-    font-weight: 800;
-    letter-spacing: -0.075ch;
+    font-weight: 400;
+    letter-spacing: -0.001ch;
   }
 
   h3,
   h4,
   h5,
   h6 {
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: -0.025ch;
   }
 
   h1 {
-    font-size: var(--fs-6);
+    font-size: var(--fs-5);
     line-height: 95%;
 
     @include breakpoint(medium) {
@@ -107,7 +143,7 @@ body {
   }
 
   h2 {
-    font-size: var(--fs-5);
+    font-size: var(--fs-4);
     line-height: 100%;
 
     @include breakpoint(medium) {
@@ -160,8 +196,15 @@ body {
 
   main p {
     font-size: var(--fs-1);
-    line-height: 133%;
+    line-height: 120%;
     margin-block: var(--space-xs);
+    font-weight: 200;
+    letter-spacing: 0.01ch;
+
+    @include breakpoint(medium) {
+      font-size: var(--fs-3);
+      line-height: 133%;
+    }
 
     &:first-child {
       margin-top: 0;

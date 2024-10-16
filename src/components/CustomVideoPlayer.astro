@@ -10,24 +10,22 @@ const {
 } = Astro.props;
 ---
 
-<div>
-  <video
-    style={`--aspect-ratio: ${aspectRatio}`}
-    class={className}
-    autoplay
-    playsinline
-    loop
-    muted
-    poster={urlForImage(posterImage).url()}
-    data-cursor="video"
-    data-desktop-vid={videoUrlDesktop}
-    data-mobile-vid={videoUrlMobile}
-    {...rest}
-  >
-    Your browser does not support the video tag.
-  </video>
-  <button id="audio-control" class="muted">Unmute</button>
-</div>
+<video
+  style={`--aspect-ratio: ${aspectRatio}`}
+  class={className}
+  autoplay
+  playsinline
+  loop
+  muted
+  poster={urlForImage(posterImage).url()}
+  data-cursor="video"
+  data-desktop-vid={videoUrlDesktop}
+  data-mobile-vid={videoUrlMobile}
+  {...rest}
+>
+  Your browser does not support the video tag.
+</video>
+<button id="audio-control" class="muted">Unmute</button>
 
 <style lang="scss">
   .responsive-video {
@@ -57,11 +55,21 @@ const {
     aspect-ratio: 9 / 16;
   }
 
+  button {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
   @media (min-width: 768px) {
     .desktop-video {
       display: block;
     }
     .mobile-video {
+      display: none;
+    }
+
+    button {
       display: none;
     }
   }

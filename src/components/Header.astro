@@ -3,43 +3,21 @@ import Navigation from "../components/Navigation.astro";
 import { SkipLinks } from "accessible-astro-components";
 import { Icon } from "astro-icon/components";
 
-const { title, logoVideo, logoFallback = true, linkedin } = Astro.props;
+const { title, logoVideo, logoFallback = true, social } = Astro.props;
 
-// console.log("linkedin", linkedin);
+console.log("social", social);
 ---
 
 <header>
   <SkipLinks />
   <Navigation title={title} logoVideo={logoVideo} logoFallback={logoFallback}>
     <li class="menu-item" data-cursor="hover">
-      <a href="/">Home</a>
+      <a href="#info">Info</a>
     </li>
-    <li class="menu-item" data-cursor="hover">
-      <a href="/about"> Information </a>
-    </li>
-
-    <!-- <li class="menu-item has-dropdown">
-      <button aria-haspopup="true" aria-expanded="false">Example Pages</button>
-      <ul class="dropdown-menu">
-        <li class="submenu-item">
-          <a href="/mdx-page/">MDX Page</a>
-        </li>
-        <li class="submenu-item">
-          <a href="/markdown-page/">Markdown Page</a>
-        </li>
-        <li class="submenu-item">
-          <a href="/accessible-components">Accessible Components</a>
-        </li>
-      </ul>
-    </li> -->
-    <!-- <li class="menu-item">
-      <a href="#" title="external link" rel="external noopener noreferrer"
-        >External Link</a
-      >
-    </li> -->
     <li class="menu-item type-icon">
-      <a href={linkedin} title="Paul Kempe Linkedin">
-        <Icon name="akar-icons:linkedin-fill" />
+      <a href={social.url} title={social.name}>
+        <!-- {social.name} -->
+        <Icon name={`akar-icons:${social.name.toLowerCase()}-fill`} />
       </a>
     </li>
   </Navigation>
@@ -48,13 +26,21 @@ const { title, logoVideo, logoFallback = true, linkedin } = Astro.props;
     @use "../assets/scss/base/outline" as *;
 
     header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--background);
+      z-index: 999;
+
       .type-icon a {
         display: block;
+        line-height: 100%;
 
         [data-icon] {
           height: auto;
-          margin-top: -4px;
-          width: 30px;
+          // margin-top: -4px;
+          width: 1.5rem;
 
           path {
             fill: var(--action-color);
