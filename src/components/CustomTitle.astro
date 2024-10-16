@@ -1,18 +1,18 @@
 ---
-const { textInput } = Astro.props;
-const plainText = textInput.toString();
+const { textInput, delay } = Astro.props;
+const plainText = textInput.toString().replace(/[^a-zA-Z0-9 ]/g, "");
+console.log("textInput", plainText);
 ---
 
-<h1 class="slide-vertical" data-splitting>{plainText}</h1>
+<h1 class="variable-font title" data-splitting>{plainText}</h1>
 
 <style>
-  * {
-    z-index: 9999;
-    height: auto;
-    border: 1px solid red;
+  h1 {
+    font-style: italic;
   }
-  .char {
-    display: inline-block;
+
+  .title {
+    --customDelay: ${delay}ms;
   }
 </style>
 

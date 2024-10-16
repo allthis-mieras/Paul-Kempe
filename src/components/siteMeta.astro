@@ -2,12 +2,17 @@
 import { ViewTransitions } from "astro:transitions";
 import { urlForImage } from "../sanity/lib/urlForImage";
 const { settings } = Astro.props;
+console.log("settings", settings);
 ---
 
 <meta charset="utf-8" />
 <title>{settings.defaultPageTitle}</title>
 <meta name="description" content={settings.defaultPageDescription} />
-<link rel="icon" type="image/svg+xml" href={settings.faviconUrl} />
+<link
+  rel="icon"
+  type="image/svg+xml"
+  href={urlForImage(settings.favicon).url()}
+/>
 <meta name="viewport" content="width=device-width" />
 <meta name="generator" content={Astro.generator} />
 
