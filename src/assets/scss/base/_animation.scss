@@ -93,9 +93,11 @@
 .variable-font {
     .char {
 
-        --delayAmount: 50ms;
+        --delayAmount: 200ms;
         --delayAmount: var(--customDelay);
         --delay: calc((var(--char-index) + 1) * 400ms);
+        --durationAmount: 1000ms;
+        --durationAmount: var(--customduration);
         font-variation-settings: "wght" 124;
         position: relative;
     }
@@ -113,8 +115,9 @@
 @keyframes grow {
     0% {
         font-variation-settings: 'wght' 224;
-        translate: -5vw 0;
-        // color: blue;
+        // translate: -0vw 2vw;
+
+        // opacity: 0;
 
     }
 

@@ -196,14 +196,14 @@ body {
 
   main p {
     font-size: var(--fs-1);
-    line-height: 120%;
+    line-height: 112.5%;
     margin-block: var(--space-xs);
     font-weight: 200;
     letter-spacing: 0.01ch;
 
     @include breakpoint(medium) {
       font-size: var(--fs-3);
-      line-height: 133%;
+      line-height: 112.5%;
     }
 
     &:first-child {

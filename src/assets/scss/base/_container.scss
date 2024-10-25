@@ -14,7 +14,7 @@
   }
 
   @include breakpoint(large) {
-    padding: 0 var(--space-l);
+    padding: 0 var(--space-xl);
     max-width: 1920px;
   }
 
