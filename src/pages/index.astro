@@ -10,40 +10,25 @@ import { loadQuery } from "../sanity/lib/load-query";
 import { urlForImage } from "../sanity/lib/urlForImage";
 import { PortableText } from "astro-portabletext";
 
-// Load homepage content
-const { data: homepage } = await loadQuery<{
-  title: string;
-  pageType: string;
-  showreelDesktop?: string;
-  posterImageDesktop?: string;
-  showreelMobile?: string;
-  posterImageMobile?: string;
-}>({
-  query: `*[_type == "pages" && pageType == "homepage"][0]`,
-});
+import {
+  getHomepageContent,
+  getAboutContent,
+  getContactContent,
+  getPosts,
+} from "../sanity/lib/load-content";
 
-// Load about content
-const { data: about } = await loadQuery<{
+const homepage = await getHomepageContent();
+const about: {
   title: string;
   pageType: string;
   body?: any;
-}>({
-  query: `*[_type == "pages" && pageType == "about"][0]`,
-});
+  clients?: any;
+  clientsTitle?: string;
+} = await getAboutContent();
+const contact = await getContactContent();
+const posts = await getPosts();
 
-// Load contact content
-const { data: contact } = await loadQuery<{
-  title: string;
-  pageType: string;
-  contact?: any;
-}>({
-  query: `*[_type == "pages" && pageType == "contact"][0]`,
-});
-
-// Load posts
-const { data: posts } = await loadQuery<SanityDocument[]>({
-  query: `*[_type == "post"][0...3]`,
-});
+console.log("CLIENTS", about.clients);
 ---
 
 <Layout>
@@ -71,28 +56,48 @@ const { data: posts } = await loadQuery<SanityDocument[]>({
         </div>
       )
     }
-    <div class="spacer">dfvdf</div>
 
-    <div class="information" id="top">
+    <div class="information">
       <div id="info" class="content__wrapper container stretch">
         {
           about && (
             <section class="about">
-              <CustomTitle delay={1000} textInput={about.title} />
+              <div class="col info">
+                {/* <CustomTitle delay={10} size="medium" textInput={about.title} /> */}
 
-              {about.body && <PortableText value={about.body} />}
+                {about.body && <PortableText value={about.body} />}
+              </div>
+              <div class="col clients">
+                <CustomTitle
+                  delay={0}
+                  size="small"
+                  textInput={about.clientsTitle}
+                />
+                {about.clients &&
+                  about.clients.map((client: any, index: number) => (
+                    <CustomTitle
+                      key={index}
+                      delay={index * 10}
+                      size="small"
+                      textInput={client.children[0].text}
+                    />
+                  ))}
+                {about.clients && <PortableText value={about.clients} />}
+              </div>
             </section>
           )
         }
 
-        {
-          contact && (
-            <section class="contact">
-              <CustomTitle delay={1000} textInput={contact.title} />
-              {contact.contact && <PortableText value={contact.contact} />}
-            </section>
-          )
-        }
+        <section class="contact">
+          {
+            contact && (
+              <section class="contact">
+                <CustomTitle delay={10} textInput={contact.title} />
+                {contact.contact && <PortableText value={contact.contact} />}
+              </section>
+            )
+          }
+        </section>
 
         <section class="posts">
           <h2>Posts</h2>
@@ -146,9 +151,52 @@ const { data: posts } = await loadQuery<SanityDocument[]>({
   }
 
   .information {
+    position: relative;
+  }
+
+  section {
+    position: sticky;
+    top: 0;
+
+    &.about {
+      display: grid;
+      gap: 3rem;
+      grid-template-columns: 1fr;
+
+      & .info p:first-child {
+        font-size: var(--fs-4);
+        font-weight: 340;
+        // font-variation-settings: "wght" 400;
+        line-height: 100%;
+        margin-bottom: var(--space-xl);
+      }
+
+      & .clients > ul {
+        margin-top: 1rem;
+        display: flex;
+        // flex-direction: column;
+        align-items: first baseline;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+
+        & li {
+          list-style: none;
+          font-size: var(--fs-2);
+          font-variation-settings: "wght" 224;
+          line-height: 100%;
+
+          // &:hover {
+          //   animation: clientHover 1000ms forwards;
+          // }
+        }
+      }
+    }
+  }
+
+  .information {
     z-index: 10;
     position: relative;
-    padding-top: 2vw;
+    padding-block: var(--space-2xl);
     backdrop-filter: blur(5vw);
     background-color: rgba(var(--background-rgb), 0.75);
     border-radius: 5vw 5vw 0 0;
@@ -162,7 +210,6 @@ const { data: posts } = await loadQuery<SanityDocument[]>({
     & .content__wrapper {
       display: grid;
       gap: 3rem;
-      padding: 3rem 1rem;
     }
   }
 
@@ -181,6 +228,23 @@ const { data: posts } = await loadQuery<SanityDocument[]>({
     & img {
       max-width: 100%;
       height: auto;
+    }
+  }
+
+  @keyframes clientHover {
+    0% {
+      font-variation-settings: "wght" 224;
+      font-size: var(--fs-2);
+      // translate: -0vw 2vw;
+
+      // opacity: 0;
+    }
+
+    100% {
+      font-variation-settings: "wght" 470;
+      font-size: var(--fs-5);
+
+      // translate: -0vw -1vw;
     }
   }
 </style>

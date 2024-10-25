@@ -9,7 +9,6 @@ import { resolve } from "./src/sanity/lib/resolve";
 // plugins
 import { codeInput } from "@sanity/code-input";
 import { schemaMarkup } from "@operationnation/sanity-plugin-schema-markup";
-import { muxInput } from "sanity-plugin-mux-input";
 
 export default defineConfig({
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
@@ -25,7 +24,6 @@ export default defineConfig({
     visionTool({}),
     codeInput(),
     schemaMarkup(),
-    muxInput(),
   ],
   schema,
 });

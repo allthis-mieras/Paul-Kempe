@@ -1,18 +1,38 @@
 ---
-const { textInput, delay } = Astro.props;
-const plainText = textInput.toString().replace(/[^a-zA-Z0-9 ]/g, "");
+const {
+  textInput = "",
+  delay = 0,
+  size = "default",
+} = Astro.props as {
+  textInput?: string;
+  delay?: number;
+  size?: "large" | "medium" | "default" | "small";
+};
+const plainText = textInput
+  ? textInput.toString().replace(/[^a-zA-Z0-9 ]/g, "")
+  : "";
 console.log("textInput", plainText);
+
+const fontSizeMap = {
+  large: "var(--fs-8)",
+  medium: "var(--fs-6)",
+  default: "var(--fs-5)",
+  small: "var(--fs-4)",
+};
+const computedFontSize = fontSizeMap[size] || fontSizeMap.default;
 ---
 
-<h1 class="variable-font title" data-splitting>{plainText}</h1>
+<h2
+  class="variable-font title"
+  data-splitting
+  style={`font-size: ${computedFontSize}; --customDelay: ${delay}ms;`}
+>
+  {plainText}
+</h2>
 
 <style>
-  h1 {
-    font-style: italic;
-  }
-
   .title {
-    --customDelay: ${delay}ms;
+    font-style: italic;
   }
 </style>
 

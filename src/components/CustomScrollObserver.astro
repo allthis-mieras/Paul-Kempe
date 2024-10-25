@@ -14,21 +14,59 @@
     }
   }
 
+  @keyframes clients {
+     0% {
+      font-variation-settings: "wght" 224;
+      transform: translate(0, 2rem);
+      opacity: 0;
+      /* font-size: var(--fs-2); */
+      // translate: -0vw 2vw;
+
+      // opacity: 0;
+    }
+    50% {
+      /* font-variation-settings: "wght" 260; */
+        opacity: 1;
+      transform: translate(0, 0);
+      /* font-size: var(--fs-4); */
+
+      // translate: -0vw -1vw;
+    }
+
+    100% {
+      font-variation-settings: "wght" 224;
+      /* font-size: var(--fs-4); */
+
+      // translate: -0vw -1vw;
+    }
+  }
+
   /* Add animation when element comes into view */
 
   /* Exclude elements with the .splitting class from animations */
   :not(.splitting).in-view {
-    animation: fade 0.3s ease forwards;
+    animation: fade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
+
 
   /* Optionally style elements that are out of view */
   .not-in-view {
     opacity: 0;
   }
+
+
+  .clients li.in-view {
+    animation: clients 3s ease-in-out forwards;
+    /* animation-direction: alternate-reverse; */
+  }
+
+   .clients li.not-in-view {
+   
+  }
 </style>
 
 <script>
-  export let tags = ["figure", "h1", "h2", "h3", "div"]; // Default tags to observe
+  export let tags = ["figure", "h1", "h2", "h3", "div, p, li"]; // Default tags to observe
 
   function initializeObserver() {
     // Intersection Observer setup
