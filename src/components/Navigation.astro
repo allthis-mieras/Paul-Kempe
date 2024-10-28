@@ -253,15 +253,16 @@ const { title, logoVideo, logoFallback = true } = Astro.props;
 
   .darkmode-toggle {
     position: fixed;
-    bottom: 1vw;
-    right: 1vw;
+    bottom: var(--space-xs);
+    right: var(--space-xs);
     padding: 1rem;
-    background: var(--background);
+    background: rgba(var(--background-rgb), 0.5);
     border-radius: 100vw;
     border: none;
 
     svg {
-      width: 1.5rem;
+      width: 1rem;
+      height: 1rem;
       // margin-top: 4px;
     }
 

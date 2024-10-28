@@ -62,27 +62,29 @@ console.log("CLIENTS", about.clients);
         {
           about && (
             <section class="about">
-              <div class="col info">
+              <div class="info">
                 {/* <CustomTitle delay={10} size="medium" textInput={about.title} /> */}
 
                 {about.body && <PortableText value={about.body} />}
               </div>
-              <div class="col clients">
+              <div class="clients">
                 <CustomTitle
                   delay={0}
-                  size="small"
+                  size="medium"
                   textInput={about.clientsTitle}
                 />
-                {about.clients &&
-                  about.clients.map((client: any, index: number) => (
-                    <CustomTitle
-                      key={index}
-                      delay={index * 10}
-                      size="small"
-                      textInput={client.children[0].text}
-                    />
-                  ))}
-                {about.clients && <PortableText value={about.clients} />}
+                <ul>
+                  {about.clients &&
+                    about.clients.map((client: any, index: number) => (
+                      <li
+                        class="client"
+                        style={{ "--delay": `${index * 0.05}s` }}
+                      >
+                        {client.children[0].text}
+                      </li>
+                    ))}
+                </ul>
+                {/* {about.clients && <PortableText value={about.clients} />} */}
               </div>
             </section>
           )
@@ -91,15 +93,19 @@ console.log("CLIENTS", about.clients);
         <section class="contact">
           {
             contact && (
-              <section class="contact">
-                <CustomTitle delay={10} textInput={contact.title} />
+              <section class="contact__details">
+                <CustomTitle
+                  size="medium"
+                  delay={10}
+                  textInput={contact.title}
+                />
                 {contact.contact && <PortableText value={contact.contact} />}
               </section>
             )
           }
         </section>
 
-        <section class="posts">
+        <!-- <section class="posts">
           <h2>Posts</h2>
           <ul>
             {
@@ -122,7 +128,7 @@ console.log("CLIENTS", about.clients);
               ))
             }
           </ul>
-        </section>
+        </section> -->
       </div>
     </div>
   </div>
@@ -134,62 +140,15 @@ console.log("CLIENTS", about.clients);
   }
 
   .wrapper {
-    position: relative;
   }
 
   .hero {
     z-index: 5;
-    position: sticky;
     height: 100dvh;
-    top: 0;
-    left: 0;
 
     div,
     video {
       height: 100%;
-    }
-  }
-
-  .information {
-    position: relative;
-  }
-
-  section {
-    position: sticky;
-    top: 0;
-
-    &.about {
-      display: grid;
-      gap: 3rem;
-      grid-template-columns: 1fr;
-
-      & .info p:first-child {
-        font-size: var(--fs-4);
-        font-weight: 340;
-        // font-variation-settings: "wght" 400;
-        line-height: 100%;
-        margin-bottom: var(--space-xl);
-      }
-
-      & .clients > ul {
-        margin-top: 1rem;
-        display: flex;
-        // flex-direction: column;
-        align-items: first baseline;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-
-        & li {
-          list-style: none;
-          font-size: var(--fs-2);
-          font-variation-settings: "wght" 224;
-          line-height: 100%;
-
-          // &:hover {
-          //   animation: clientHover 1000ms forwards;
-          // }
-        }
-      }
     }
   }
 
@@ -210,6 +169,77 @@ console.log("CLIENTS", about.clients);
     & .content__wrapper {
       display: grid;
       gap: 3rem;
+    }
+  }
+
+  section {
+    &.about {
+      & .info {
+        // margin-block: 10vh;
+      }
+      & .info p:first-child {
+        font-size: var(--fs-4);
+        font-variation-settings: "wght" 400;
+        line-height: 100%;
+        margin-bottom: var(--space-xl);
+      }
+
+      & .info p {
+        font-size: var(--fs-2);
+      }
+
+      & .clients {
+        margin-top: var(--space-xl);
+      }
+
+      & .clients > ul {
+        margin: 0;
+        margin-top: var(--space-m);
+        padding: 0;
+        display: flex;
+        align-items: first baseline;
+        flex-wrap: wrap;
+        gap: 0rem 1rem;
+
+        & li {
+          list-style: none;
+          font-size: var(--fs-2);
+          font-variation-settings: "wght" 224;
+          line-height: 100%;
+        }
+      }
+    }
+
+    &.contact {
+      margin-top: var(--space-xl);
+
+      & h3 {
+        font-size: var(--fs-3);
+        font-variation-settings: "wght" 400;
+        line-height: 112.5%;
+      }
+
+      & p {
+        font-size: var(--fs-2);
+        font-variation-settings: "wght" 224;
+        line-height: 100%;
+      }
+
+      & ul {
+        margin: 0;
+        margin-block: var(--space-xs);
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+
+        & li {
+          list-style: none;
+          font-size: var(--fs-2);
+          font-variation-settings: "wght" 224;
+          line-height: 100%;
+        }
+      }
     }
   }
 
@@ -235,16 +265,11 @@ console.log("CLIENTS", about.clients);
     0% {
       font-variation-settings: "wght" 224;
       font-size: var(--fs-2);
-      // translate: -0vw 2vw;
-
-      // opacity: 0;
     }
 
     100% {
       font-variation-settings: "wght" 470;
       font-size: var(--fs-5);
-
-      // translate: -0vw -1vw;
     }
   }
 </style>

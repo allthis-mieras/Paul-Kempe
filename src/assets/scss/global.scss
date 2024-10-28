@@ -32,9 +32,9 @@
         monospace;
     // light theme
     --clr-brand: #FF2E16;
-    --font-color: var(--primary-400);
-    --background-rgb: 255, 255, 255; // use with rgba
-    --action-color: var(--primary-100);
+    --font-color: var(--black);
+    --background-rgb: 255, 0, 0; // use with rgba
+    --action-color: var(--clr-brand);
     --action-color-state: var(--primary-500);
     --background: var(--neutral-100);
     --primary-background: var(--primary-100);
@@ -43,9 +43,9 @@
 
 // dark color scheme overrides
 .darkmode {
-    --font-color: #FF2E16;
+    --font-color: var(--clr-brand);
     --background-rgb: 0, 0, 0; // use with rgba
-    --action-color: var(--secondary-100);
+    --action-color: var(--clr-brand);
     --action-color-state: var(--secondary-500);
     --background: #000;
     --primary-background: var(--primary-500);
