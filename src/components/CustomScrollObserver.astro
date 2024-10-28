@@ -14,33 +14,6 @@
     }
   }
 
-  @keyframes clients {
-     0% {
-      font-variation-settings: "wght" 224;
-      transform: translate(0, 2rem);
-      opacity: 0;
-      /* font-size: var(--fs-2); */
-      // translate: -0vw 2vw;
-
-      // opacity: 0;
-    }
-    50% {
-      /* font-variation-settings: "wght" 260; */
-        opacity: 1;
-      transform: translate(0, 0);
-      /* font-size: var(--fs-4); */
-
-      // translate: -0vw -1vw;
-    }
-
-    100% {
-      font-variation-settings: "wght" 224;
-      /* font-size: var(--fs-4); */
-
-      // translate: -0vw -1vw;
-    }
-  }
-
   /* Add animation when element comes into view */
 
   /* Exclude elements with the .splitting class from animations */
@@ -48,20 +21,41 @@
     animation: fade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-
   /* Optionally style elements that are out of view */
   .not-in-view {
     opacity: 0;
   }
 
+  @keyframes clients {
+    0% {
+      transform: translate(0, 2rem);
+      opacity: 0;
+      /* font-variation-settings: "wght" 244; */
+    }
+    50% {
+      opacity: 1;
+      /* transform: translate(-1rem, 0); */
+    }
+
+    100% {
+      /* font-variation-settings: "wght" 260; */
+      opacity: 1;
+      /* font-variation-settings: "wght" 224; */
+    }
+  }
+
+  .clients li {
+    opacity: 0;
+  }
 
   .clients li.in-view {
-    animation: clients 3s ease-in-out forwards;
+    animation: clients 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--delay);
     /* animation-direction: alternate-reverse; */
   }
 
-   .clients li.not-in-view {
-   
+  .clients li.not-in-view {
+    opacity: 0;
   }
 </style>
 

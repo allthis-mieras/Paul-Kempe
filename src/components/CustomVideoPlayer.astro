@@ -57,8 +57,19 @@ const {
 
   button {
     position: absolute;
-    bottom: 0;
-    left: 0;
+    bottom: 0.6666666667rem;
+    left: 0.6666666667rem;
+    border: 0;
+    border-radius: 100vw;
+    background-color: rgba(var(--background-rgb), 0.4);
+    backdrop-filter: blur(0.6666666667rem);
+    color: var(--font-color);
+    font-family: var(--font-family-mono);
+    font-size: var(--fs--3);
+    line-height: 100%;
+    text-transform: uppercase;
+    letter-spacing: 0.015ch;
+    padding: var(--space-s) var(--space-s);
   }
 
   @media (min-width: 768px) {
@@ -84,7 +95,7 @@ const {
     function toggleMute(video) {
       video.muted = !video.muted;
       audioControlButton.textContent = video.muted ? "Unmute" : "Mute";
-      // console.log("video muted", video.muted);
+      console.log("video muted", video.muted);
     }
 
     // Add event listener to each video
