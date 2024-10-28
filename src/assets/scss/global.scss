@@ -34,8 +34,8 @@
     --clr-brand: #FF2E16;
     --font-color: var(--black);
     --background-rgb: 255, 0, 0; // use with rgba
-    --action-color: var(--clr-brand);
-    --action-color-state: var(--primary-500);
+    --action-color: var(--black);
+    --action-color-state: var(--black);
     --background: var(--neutral-100);
     --primary-background: var(--primary-100);
     --neutral-background: var(--neutral-200);
@@ -46,8 +46,8 @@
     --font-color: var(--clr-brand);
     --background-rgb: 0, 0, 0; // use with rgba
     --action-color: var(--clr-brand);
-    --action-color-state: var(--secondary-500);
-    --background: #000;
+    --action-color-state: var(--clr-brand);
+    --background: var(--neutral-1000);
     --primary-background: var(--primary-500);
     --neutral-background: var(--neutral-900);
 }

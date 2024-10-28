@@ -30,8 +30,10 @@ const { title, logoVideo, logoFallback = true, social } = Astro.props;
       top: 0;
       left: 0;
       width: 100%;
-      background: var(--background);
+      background: none;
       z-index: 999;
+      z-index: 999;
+      mix-blend-mode: difference;
 
       .type-icon a {
         display: block;

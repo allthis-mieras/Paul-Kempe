@@ -6,25 +6,25 @@ const { title, showDate, timeZone = true } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
-<footer>
+<footer class="container">
   <div class="year"><p>{year} © {title}</p></div>
   <div class="timezone">
     <CustomClock timeZone={timeZone} showDate={showDate} />
   </div>
   <div class="credits"><p>website: <a href="#">allthis.digital</a></p></div>
-  <div class="progress"></div>
 </footer>
 
 <style lang="scss">
   footer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    padding: 1rem;
+    padding-block: var(--space-xs);
 
     font-family: var(--font-family-mono);
+    font-size: var(--fs--3);
 
     p {
-      font-size: var(--fs--2);
+      font-size: var(--fs--3);
       margin: 0; // Added missing value for margin
     }
     div {
@@ -33,9 +33,11 @@ const year = new Date().getFullYear();
 
     div:nth-child(1) {
       justify-self: start;
+      text-aign: center;
     }
     div:last-child {
       justify-self: end;
+      text-align: right;
     }
   }
 
