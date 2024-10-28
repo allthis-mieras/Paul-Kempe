@@ -44,4 +44,27 @@ const year = new Date().getFullYear();
   a {
     color: #333;
   }
+
+  @media (max-width: 768px) {
+    footer {
+      grid-template-columns: 1fr 1fr;
+      div {
+        justify-self: center;
+      }
+
+      & .timezone {
+        justify-self: center;
+        order: 1;
+
+        grid-column: span 2;
+      }
+      & .year {
+        order: 2;
+        text-align: right;
+      }
+      & .credits {
+        order: 3;
+      }
+    }
+  }
 </style>

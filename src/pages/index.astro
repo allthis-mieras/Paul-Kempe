@@ -51,7 +51,7 @@ console.log("CLIENTS", about.clients);
                   class="video"
                 />
               </div>
-              <a href="#info" class="scroll-down">
+              <a href="#info"  onclick="lenis.scrollTo('#info')" class="button scroll-down">
                 <span></span>
                 <span>info</span>
                 <span></span>
@@ -156,19 +156,37 @@ console.log("CLIENTS", about.clients);
       height: 100%;
     }
 
-    & .scroll-down {
+ 
+
+    & .button {
+          position: absolute;
+    bottom: 0.6666666667rem;
+    left: 0.6666666667rem;
+    border: 0;
+    border-radius: 100vw;
+    background-color: rgba(var(--background-rgb), 0.4);
+    backdrop-filter: blur(0.6666666667rem);
+    color: var(--font-color);
+    font-family: var(--font-family-mono);
+    font-size: var(--fs--3);
+    line-height: 100%;
+    text-transform: uppercase;
+    letter-spacing: 0.015ch;
+    padding: var(--space-s) var(--space-s);
+    }
+
+       & .scroll-down {
       position: absolute;
-      bottom: 5vh;
+    
       left: 50%;
       transform: translateX(-50%);
       z-index:100;
       
-      
-      
-      
   
     }
   }
+
+
 
   .information {
     z-index: 10;
@@ -215,7 +233,7 @@ console.log("CLIENTS", about.clients);
         display: flex;
         align-items: first baseline;
         flex-wrap: wrap;
-        gap: 0.25em 1em;
+        gap: 0.25ch 0.5ch; 
 
         & li {
           list-style: none;

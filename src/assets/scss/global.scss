@@ -31,12 +31,12 @@
         'DejaVu Sans Mono',
         monospace;
     // light theme
-    --clr-brand: #FF2E16;
+    --clr-brand: rgb(255, 46, 22);
     --font-color: var(--black);
-    --background-rgb: 255, 0, 0; // use with rgba
+    --background-rgb: 255, 46, 22; // use with rgba
     --action-color: var(--black);
     --action-color-state: var(--black);
-    --background: var(--neutral-100);
+    --background: var(--clr-brand);
     --primary-background: var(--primary-100);
     --neutral-background: var(--neutral-200);
 }
