@@ -43,14 +43,15 @@ export default defineConfig({
           sites: [
             {
               title: "Paul Kempe Studio",
-              apiId: "50d37606-9195-4a55-90c0-225d42f16266",
-              buildHookId: "672207c60f4d4b692f8f21ae",
+              apiId: import.meta.env.PUBLIC_NETLIFY_API_ID,
+              buildHookId: import.meta.env.PUBLIC_SANITY_API_WRITE_TOKEN,
+
               name: "paulkempe",
             },
             {
               title: "Paul Kempe Studio Website",
-              apiId: "50d37606-9195-4a55-90c0-225d42f16266",
-              buildHookId: "672207c60f4d4b692f8f21ae",
+              apiId: import.meta.env.PUBLIC_NETLIFY_API_ID,
+              buildHookId: import.meta.env.PUBLIC_SANITY_API_WRITE_TOKEN,
               name: "sanity-paulkempe-studio",
               url: "https://paulkempe.netlify.app/",
             },
