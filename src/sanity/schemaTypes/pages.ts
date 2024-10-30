@@ -119,6 +119,7 @@ export const pageType = defineType({
       name: "contact",
       type: "blockContent",
       title: "Text",
+
       hidden: ({ parent }) => parent.pageType !== "contact",
     }),
     defineField({
