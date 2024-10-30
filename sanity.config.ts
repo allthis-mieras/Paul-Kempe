@@ -10,6 +10,15 @@ import { resolve } from "./src/sanity/lib/resolve";
 import { codeInput } from "@sanity/code-input";
 import { schemaMarkup } from "@operationnation/sanity-plugin-schema-markup";
 
+import {
+  dashboardTool,
+  sanityTutorialsWidget,
+  projectUsersWidget,
+  projectInfoWidget,
+} from "@sanity/dashboard";
+
+import { netlifyWidget } from "sanity-plugin-dashboard-widget-netlify";
+
 export default defineConfig({
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
   dataset: import.meta.env.PUBLIC_SANITY_DATASET,
@@ -24,6 +33,31 @@ export default defineConfig({
     visionTool({}),
     codeInput(),
     schemaMarkup(),
+    dashboardTool({
+      widgets: [
+        sanityTutorialsWidget(),
+        projectInfoWidget(),
+        projectUsersWidget(),
+        netlifyWidget({
+          title: "Deploys",
+          sites: [
+            {
+              title: "Paul Kempe Studio",
+              apiId: "50d37606-9195-4a55-90c0-225d42f16266",
+              buildHookId: "672207c60f4d4b692f8f21ae",
+              name: "paulkempe",
+            },
+            {
+              title: "Paul Kempe Studio Website",
+              apiId: "50d37606-9195-4a55-90c0-225d42f16266",
+              buildHookId: "672207c60f4d4b692f8f21ae",
+              name: "sanity-paulkempe-studio",
+              url: "https://paulkempe.netlify.app/",
+            },
+          ],
+        }),
+      ],
+    }),
   ],
   schema,
 });

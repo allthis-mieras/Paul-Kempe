@@ -4,8 +4,8 @@ import { defineField, defineType } from "sanity";
 
 export const siteSettingsType = defineType({
   name: "siteSettings",
-  type: "document",
   title: "Site Settings",
+  type: "document",
   groups: [
     { name: "website", title: "Website" },
     { name: "analytics", title: "Analytics" },

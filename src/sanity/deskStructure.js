@@ -16,5 +16,10 @@ export const myStructure = (S) =>
             .documentId('siteSettings')
         ),
       // Regular document types
-      ...S.documentTypeListItems().filter(listItem => !['siteSettings'].includes(listItem.getId()))
+      ...S.documentTypeListItems().filter(
+        (listItem) => listItem.getId() !== 'siteSettings'
+      ),
     ]);
+
+
+export default myStructure;
