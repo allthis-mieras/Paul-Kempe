@@ -12,7 +12,6 @@ import { schemaMarkup } from "@operationnation/sanity-plugin-schema-markup";
 
 import {
   dashboardTool,
-  sanityTutorialsWidget,
   projectUsersWidget,
   projectInfoWidget,
 } from "@sanity/dashboard";
@@ -32,11 +31,7 @@ export default defineConfig({
     codeInput(),
     schemaMarkup(),
     dashboardTool({
-      widgets: [
-        sanityTutorialsWidget(),
-        projectInfoWidget(),
-        projectUsersWidget(),
-      ],
+      widgets: [projectInfoWidget(), projectUsersWidget()],
     }),
   ],
   schema,
