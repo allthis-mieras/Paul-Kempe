@@ -26,6 +26,7 @@ export default defineConfig({
     presentationTool({
       resolve,
       previewUrl: location.origin,
+      // previewUrl: import.meta.env.SANITY_PREVIEW_URL,
     }),
     visionTool({}),
     codeInput(),
