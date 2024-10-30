@@ -17,8 +17,6 @@ import {
   projectInfoWidget,
 } from "@sanity/dashboard";
 
-import { netlifyWidget } from "sanity-plugin-dashboard-widget-netlify";
-
 export default defineConfig({
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
   dataset: import.meta.env.PUBLIC_SANITY_DATASET,
@@ -38,25 +36,6 @@ export default defineConfig({
         sanityTutorialsWidget(),
         projectInfoWidget(),
         projectUsersWidget(),
-        netlifyWidget({
-          title: "Deploys",
-          sites: [
-            {
-              title: "Paul Kempe Studio",
-              apiId: import.meta.env.PUBLIC_NETLIFY_API_ID,
-              buildHookId: import.meta.env.PUBLIC_SANITY_API_WRITE_TOKEN,
-
-              name: "paulkempe",
-            },
-            {
-              title: "Paul Kempe Studio Website",
-              apiId: import.meta.env.PUBLIC_NETLIFY_API_ID,
-              buildHookId: import.meta.env.PUBLIC_SANITY_API_WRITE_TOKEN,
-              name: "sanity-paulkempe-studio",
-              url: "https://paulkempe.netlify.app/",
-            },
-          ],
-        }),
       ],
     }),
   ],
