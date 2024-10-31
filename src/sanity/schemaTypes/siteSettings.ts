@@ -40,10 +40,10 @@ export const siteSettingsType = defineType({
       name: "logoVideo",
       type: "file",
       title: "Logo Video",
-      description: "Add your logo video (MP4) here.",
+      description: "Add your logo video (MP4 or WebM) here.",
       group: "website",
       options: {
-        accept: "video/mp4",
+        accept: "video/mp4,video/webm",
       },
     }),
     defineField({
