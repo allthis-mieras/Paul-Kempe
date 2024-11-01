@@ -161,21 +161,23 @@ console.log("CLIENTS", about.clients);
  
 
     & .button {
-          position: absolute;
-    bottom: 0.6666666667rem;
-    left: 0.6666666667rem;
-    border: 0;
-    border-radius: 100vw;
-    background-color: rgba(var(--background-rgb), 0.4);
-    backdrop-filter: blur(0.6666666667rem);
-    color: var(--font-color);
-    font-family: var(--font-family-mono);
-    font-size: var(--fs--3);
-    line-height: 100%;
-    text-transform: uppercase;
-    letter-spacing: 0.015ch;
-    padding: var(--space-s) var(--space-s);
-    }
+      position: absolute;
+      bottom: 0.6666666667rem;
+      left: 0.6666666667rem;
+      border: 0;
+      border-radius: 100vw;
+      background-color: rgba(var(--background-rgb), 0.005);
+      backdrop-filter: blur(0.6666666667rem);
+      color: var(--font-color);
+      font-family: var(--font-family-brand);
+      font-size: var(--fs--3);
+      line-height: 100%;
+      text-transform: uppercase;
+      letter-spacing: 0.015ch;
+      padding: var(--space-s) var(--space-s);
+
+    
+  }
 
        & .scroll-down {
       position: absolute;
@@ -217,7 +219,7 @@ console.log("CLIENTS", about.clients);
         font-size: var(--fs-4);
         font-variation-settings: "wght" 400;
         line-height: 100%;
-        margin-bottom: var(--space-xl);
+        margin-bottom: var(--space-m);
       }
 
       & .info p {
@@ -225,12 +227,12 @@ console.log("CLIENTS", about.clients);
       }
 
       & .clients {
-        margin-top: var(--space-3xl);
+        margin-top: var(--space-2xl);
       }
 
       & .clients > ul {
         margin: 0;
-        margin-top: var(--space-m);
+        margin-top: var(--space-xs);
         padding: 0;
         display: flex;
         align-items: first baseline;
@@ -247,7 +249,7 @@ console.log("CLIENTS", about.clients);
     }
 
     &.contact {
-      margin-top: var(--space-3xl);
+      margin-top: var(--space-2xl);
 
       & h3 {
         font-size: var(--fs-3);
@@ -255,15 +257,40 @@ console.log("CLIENTS", about.clients);
         line-height: 112.5%;
       }
 
+      & h4 {
+        margin-top: var(--space-s);
+        font-size: var(--fs-1);
+        font-variation-settings: "wght" 400;
+        line-height: 112.5%;
+      }
+
+      & h4 + ul {
+
+      display: block;
+      
+      & li {
+        font-size: var(--fs--2);
+        font-variation-settings: "wght" 100;
+        line-height: 120%;;
+
+      }
+    }
       & p {
         font-size: var(--fs-2);
         font-variation-settings: "wght" 224;
         line-height: 100%;
+        margin-block: var(--space-2xs);
+        line-height: 112.5%;
+
+        @media (max-width: 768px) {
+          font-size: var(--fs-0);
+        }
+
       }
 
       & ul {
         margin: 0;
-        margin-block: var(--space-xs);
+        margin-block: var(--space-2xs);
         padding: 0;
         display: flex;
         flex-wrap: wrap;
