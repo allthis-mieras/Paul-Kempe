@@ -3,14 +3,25 @@ import Navigation from "../components/Navigation.astro";
 import { SkipLinks } from "accessible-astro-components";
 import { Icon } from "astro-icon/components";
 
-const { title, logoVideo, logoFallback = true, social } = Astro.props;
+const {
+  title,
+  logoVideo,
+  logoVideoMp4,
+  logoFallback = true,
+  social,
+} = Astro.props;
 
-// console.log("social", social);
+// console.log("logoVideoMp4", logoVideoMp4);
 ---
 
 <header>
   <SkipLinks />
-  <Navigation title={title} logoVideo={logoVideo} logoFallback={logoFallback}>
+  <Navigation
+    title={title}
+    logoVideo={logoVideo}
+    logoVideoMp4={logoVideoMp4}
+    logoFallback={logoFallback}
+  >
     <li class="menu-item" data-cursor="hover">
       <a href="#info">Info</a>
     </li>
