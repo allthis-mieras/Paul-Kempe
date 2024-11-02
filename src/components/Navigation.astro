@@ -6,7 +6,7 @@ import { Image } from "astro:assets";
 import { urlForImage } from "../sanity/lib/urlForImage";
 import { urlForFile } from "../sanity/lib/urlForFile";
 
-const { title, logoVideo, logoFallback = true } = Astro.props;
+const { title, logoVideo, logoVideoMp4, logoFallback = true } = Astro.props;
 ---
 
 <div id="main-navigation" class="is-desktop py-8">
@@ -21,8 +21,10 @@ const { title, logoVideo, logoFallback = true } = Astro.props;
             muted
             playsinline
             poster={urlForImage(logoFallback).url()}
+            id="logo-video"
           >
-            <source src={urlForFile(logoVideo)} type="video/mp4" />
+            <source src={urlForFile(logoVideo)} type="video/webm" />
+            <source src={urlForFile(logoVideoMp4)} type="video/mp4" />
             {logoFallback && (
               <Image
                 src={urlForImage(logoFallback).url()}
@@ -74,6 +76,7 @@ const { title, logoVideo, logoFallback = true } = Astro.props;
     & video,
     & img {
       width: auto;
+      min-height: 72px;
       height: calc(10vw + 5vh);
       max-height: 112px;
     }
@@ -87,6 +90,7 @@ const { title, logoVideo, logoFallback = true } = Astro.props;
   #main-navigation {
     > .container {
       display: flex;
+
       justify-content: space-between;
       flex-wrap: wrap;
     }

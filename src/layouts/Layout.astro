@@ -5,6 +5,8 @@ import "../assets/scss/global.scss";
 import { getSiteSettings } from "../sanity/lib/sanity";
 const siteSettings = await getSiteSettings();
 
+// console.log("siteSettings", siteSettings);
+
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import SiteMeta from "../components/siteMeta.astro";
@@ -25,6 +27,7 @@ const visualEditingEnabled =
     <Header
       title={siteSettings.title}
       logoVideo={siteSettings.logoVideo}
+      logoVideoMp4={siteSettings.logoVideoMp4}
       logoFallback={siteSettings.logoFallback}
       social={siteSettings.socialAccounts[0]}
     />
