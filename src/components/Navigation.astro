@@ -74,7 +74,8 @@ const { title, logoVideo, logoFallback = true } = Astro.props;
     & video,
     & img {
       width: auto;
-      height: 112px;
+      height: calc(10vw + 5vh);
+      max-height: 112px;
     }
   }
 </style>
@@ -253,12 +254,19 @@ const { title, logoVideo, logoFallback = true } = Astro.props;
 
   .darkmode-toggle {
     position: fixed;
-    bottom: var(--space-xs);
-    right: var(--space-xs);
-    padding: 1rem;
-    background: rgba(var(--background-rgb), 0.5);
+    bottom: 0.6666666667rem;
+    right: 0.6666666667rem;
+    border: 0;
     border-radius: 100vw;
-    border: none;
+    background-color: rgba(var(--background-rgb), 0.005);
+    backdrop-filter: blur(0.6666666667rem);
+    color: var(--font-color);
+    font-family: var(--font-family-brand);
+    font-size: var(--fs--3);
+    line-height: 100%;
+    text-transform: uppercase;
+    letter-spacing: 0.015ch;
+    padding: var(--space-s) var(--space-s);
 
     svg {
       width: 1rem;
