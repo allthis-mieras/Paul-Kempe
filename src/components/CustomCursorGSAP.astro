@@ -1,5 +1,5 @@
 ---
-import { onMount } from "solid-js";
+
 ---
 
 <div class="cursor">
@@ -51,9 +51,9 @@ import { onMount } from "solid-js";
 <script>
   import { gsap } from "gsap";
 
-  let cursor;
-  let cursorText;
-  let video;
+  let cursor: HTMLElement | null;
+  let cursorText: HTMLElement | null;
+  let video: HTMLVideoElement | null;
   let cursorScale;
 
   let lastKnownPosition = {
@@ -67,7 +67,7 @@ import { onMount } from "solid-js";
   const initializeCursor = () => {
     cursor = document.querySelector(".cursor");
     cursorText = document.querySelector(".cursor-text");
-    video = document.getElementById("video");
+    video = document.getElementById("video") as HTMLVideoElement;
     cursorScale = document.querySelectorAll(".cursor-scale");
 
     if (isTouchDevice || !cursor) {
@@ -118,16 +118,16 @@ import { onMount } from "solid-js";
     // Cursor scale on hover for cursor-scale elements
     cursorScale.forEach((link) => {
       link.addEventListener("mousemove", () => {
-        cursor.classList.add("grow");
+        cursor?.classList.add("grow");
         if (link.classList.contains("small")) {
-          cursor.classList.remove("grow");
-          cursor.classList.add("grow-small");
+          cursor?.classList.remove("grow");
+          cursor?.classList.add("grow-small");
         }
       });
 
       link.addEventListener("mouseleave", () => {
-        cursor.classList.remove("grow");
-        cursor.classList.remove("grow-small");
+        cursor?.classList.remove("grow");
+        cursor?.classList.remove("grow-small");
       });
     });
 
@@ -150,16 +150,22 @@ import { onMount } from "solid-js";
           backgroundColor: "",
           duration: 0.3,
         });
-        cursorText.textContent = ""; // Clear cursor text when leaving video
+        if (cursorText) {
+          cursorText.textContent = ""; // Clear cursor text when leaving video
+        }
       });
     }
 
     // Update cursor text based on mute status
     function updateCursorText() {
       if (video && video.muted) {
-        cursorText.textContent = "ummute";
+        if (cursorText) {
+          cursorText.textContent = "ummute";
+        }
       } else {
-        cursorText.textContent = "mute";
+        if (cursorText) {
+          cursorText.textContent = "mute";
+        }
       }
     }
 
