@@ -100,7 +100,7 @@ const {
     // Update de cursor-tekst (Mute / Unmute) gebaseerd op de status van de video
     function updateCursorText(video) {
       if (!cursorText) return;
-      cursorText.textContent = video.muted ? "ummute" : "mute";
+      cursorText.textContent = video.muted ? "unmute" : "mute";
     }
 
     // Voeg click-event toe aan elke video
