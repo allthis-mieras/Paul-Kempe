@@ -136,7 +136,7 @@
       gsap.to(cursor, {
         scale: 3.5,
         autoAlpha: 0.9,
-        clearProps: "backgroundColor", // Verwijder achtergrondkleur
+        backgroundColor: "transparent",
         duration: 0.1,
       });
       updateCursorText();
@@ -146,7 +146,7 @@
       gsap.to(cursor, {
         scale: 1,
         autoAlpha: 0.7,
-        clearProps: "backgroundColor", // Verwijder achtergrondkleur
+        backgroundColor: "",
         duration: 0.3,
       });
       if (cursorText) {
