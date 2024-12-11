@@ -1,0 +1,161 @@
+---
+
+---
+
+<div class="cursor"></div>
+
+<style>
+  .cursor {
+    position: fixed;
+    width: 2rem;
+    height: 2rem;
+    padding: 1rem;
+    top: 0;
+    left: 0;
+    background: var(--font-color);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2000;
+    opacity: 0.7;
+    transform: translate(-50%, -50%);
+  }
+
+  .unmute {
+    content: "unmute";
+  }
+
+  .mute {
+    content: "mute";
+  }
+</style>
+<script>
+  let lastKnownPosition = {
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2,
+  };
+
+  import { gsap } from "gsap";
+
+  const isTouchDevice =
+    "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+  const initializeCursor = () => {
+    const cursor = document.querySelector(".cursor");
+    if (isTouchDevice || !cursor) {
+      if (cursor) {
+        (cursor as HTMLElement).style.display = "none";
+      }
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      // Set initial position of the cursor
+      gsap.set(".cursor", {
+        xPercent: -50,
+        yPercent: -50,
+        x: lastKnownPosition.x,
+        y: lastKnownPosition.y,
+      });
+
+      // Create quickTo functions for smoother animation
+      let xTo = gsap.quickTo(".cursor", "x", { duration: 0.6, ease: "power3" }),
+        yTo = gsap.quickTo(".cursor", "y", { duration: 0.6, ease: "power3" });
+
+      // Function to move the cursor
+      const movecursor = (e: MouseEvent) => {
+        lastKnownPosition.x = e.clientX;
+        lastKnownPosition.y = e.clientY;
+        xTo(e.clientX);
+        yTo(e.clientY);
+      };
+
+      // Function to add hover listeners
+      const addHoverListeners = () => {
+        // default cursor for a links
+        document.querySelectorAll("a").forEach((element) => {
+          element.addEventListener("mouseenter", () => {
+            const cursor = document.querySelector(".cursor");
+            if (cursor) {
+              gsap.to(cursor, { scale: 0.5, autoAlpha: 0.99, duration: 0.1 });
+            }
+          });
+          element.addEventListener("mouseleave", () => {
+            const cursor = document.querySelector(".cursor");
+            if (cursor) {
+              gsap.to(cursor, { scale: 1, autoAlpha: 0.7, duration: 0.1 });
+            }
+          });
+        });
+        // video cursor
+        document
+          .querySelectorAll('[data-cursor="video"]')
+          .forEach((element) => {
+            element.addEventListener("mouseenter", () => {
+              const cursor = document.querySelector(".cursor");
+              if (cursor) {
+                const video = element.querySelectorAll(".video");
+
+                if (video) {
+                  // const isMuted = video.muted;
+                  gsap.to(cursor, {
+                    scale: 3.5,
+                    autoAlpha: 0.9,
+                    duration: 0.1,
+                  });
+                  // cursor.textContent = isMuted ? "Unmute" : "Mute";
+                }
+              }
+            });
+            element.addEventListener("mouseleave", () => {
+              const cursor = document.querySelector(".cursor");
+              if (cursor) {
+                gsap.to(cursor, { scale: 1, autoAlpha: 0.7, duration: 0.3 });
+                cursor.textContent = "";
+              }
+            });
+
+            element.addEventListener("click", () => {
+              const video = element.querySelectorAll(".video");
+              if (video) {
+                // console.log("video", video);
+                // video.muted = !video.muted;
+                const cursor = document.querySelector(".cursor");
+                if (cursor) {
+                  // cursor.textContent = video.muted ? "Unmute" : "Mute";
+                }
+              }
+            });
+          });
+      };
+
+      window.removeEventListener("mousemove", movecursor);
+      window.addEventListener("mousemove", movecursor);
+      addHoverListeners();
+
+      // Hide cursor when mouse leaves the viewport
+      document.addEventListener("mouseleave", () => {
+        gsap.to(".cursor", {
+          duration: 0.7,
+          opacity: 0,
+        });
+      });
+
+      // Show cursor when mouse enters the viewport
+      document.addEventListener("mouseenter", () => {
+        gsap.to(".cursor", {
+          duration: 0.7,
+          opacity: 0.7,
+        });
+      });
+    });
+
+    ctx.add(() => {
+      console.log("initializeCursor");
+    });
+  };
+
+  document.addEventListener("astro:page-load", initializeCursor, {
+    once: false,
+  });
+  document.addEventListener("astro:afer-swap", initializeCursor);
+</script>
