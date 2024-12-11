@@ -118,22 +118,16 @@ import { onMount } from "solid-js";
     // Cursor scale on hover for cursor-scale elements
     cursorScale.forEach((link) => {
       link.addEventListener("mousemove", () => {
-        if (cursor) {
-          cursor.classList.add("grow");
-        }
+        cursor?.classList.add("grow");
         if (link.classList.contains("small")) {
-          if (cursor) {
-            cursor.classList.remove("grow");
-          }
-          if (cursor) {
-            cursor.classList.add("grow-small");
-          }
+          cursor?.classList.remove("grow");
+          cursor?.classList.add("grow-small");
         }
       });
 
       link.addEventListener("mouseleave", () => {
-        cursor.classList.remove("grow");
-        cursor.classList.remove("grow-small");
+        cursor?.classList.remove("grow");
+        cursor?.classList.remove("grow-small");
       });
     });
 
@@ -165,9 +159,13 @@ import { onMount } from "solid-js";
     // Update cursor text based on mute status
     function updateCursorText() {
       if (video && video.muted) {
-        cursorText.textContent = "unmute";
+        if (cursorText) {
+          cursorText.textContent = "ummute";
+        }
       } else {
-        cursorText.textContent = "mute";
+        if (cursorText) {
+          cursorText.textContent = "mute";
+        }
       }
     }
 
