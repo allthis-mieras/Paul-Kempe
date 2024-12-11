@@ -1,8 +1,10 @@
 ---
-
+import { onMount } from "solid-js";
 ---
 
-<div class="cursor"></div>
+<div class="cursor">
+  <span class="cursor-text"></span>
+</div>
 
 <style>
   .cursor {
@@ -12,12 +14,21 @@
     padding: 1rem;
     top: 0;
     left: 0;
-    background: var(--font-color);
+    background: var(
+      --font-color,
+      red
+    ); /* Fallback naar rood als var niet is ingesteld */
     border-radius: 50%;
     pointer-events: none;
     z-index: 2000;
     opacity: 0.7;
     transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
   }
 
   .unmute {
@@ -27,135 +38,137 @@
   .mute {
     content: "mute";
   }
+
+  .cursor.hide {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .cursor-text {
+    font-size: 1rem;
+  }
 </style>
+
 <script>
+  import { gsap } from "gsap";
+
+  let cursor;
+  let cursorText;
+  let video;
+  let cursorScale;
+
   let lastKnownPosition = {
     x: window.innerWidth / 2,
     y: window.innerHeight / 2,
   };
 
-  import { gsap } from "gsap";
-
   const isTouchDevice =
     "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
   const initializeCursor = () => {
-    const cursor = document.querySelector(".cursor");
+    cursor = document.querySelector(".cursor");
+    cursorText = document.querySelector(".cursor-text");
+    video = document.getElementById("video");
+    cursorScale = document.querySelectorAll(".cursor-scale");
+
     if (isTouchDevice || !cursor) {
       if (cursor) {
-        (cursor as HTMLElement).style.display = "none";
+        cursor.style.display = "none";
       }
       return;
     }
 
-    const ctx = gsap.context(() => {
-      // Set initial position of the cursor
-      gsap.set(".cursor", {
-        xPercent: -50,
-        yPercent: -50,
-        x: lastKnownPosition.x,
-        y: lastKnownPosition.y,
+    gsap.set(".cursor", {
+      xPercent: -50,
+      yPercent: -50,
+      x: lastKnownPosition.x,
+      y: lastKnownPosition.y,
+    });
+
+    let xTo = gsap.quickTo(".cursor", "x", { duration: 0.6, ease: "power3" });
+    let yTo = gsap.quickTo(".cursor", "y", { duration: 0.6, ease: "power3" });
+
+    // Update cursor position
+    window.addEventListener("mousemove", (e) => {
+      lastKnownPosition.x = e.clientX;
+      lastKnownPosition.y = e.clientY;
+      xTo(e.clientX);
+      yTo(e.clientY);
+    });
+
+    // Handle cursor visibility on viewport leave/enter
+    document.addEventListener("mouseleave", () => {
+      gsap.to(".cursor", { duration: 0.7, opacity: 0 });
+    });
+
+    document.addEventListener("mouseenter", () => {
+      gsap.to(".cursor", { duration: 0.7, opacity: 0.7 });
+    });
+
+    // Cursor behavior on links (hover effects)
+    document.querySelectorAll("a").forEach((element) => {
+      element.addEventListener("mouseenter", () => {
+        gsap.to(cursor, { scale: 0.5, autoAlpha: 0.99, duration: 0.1 });
       });
 
-      // Create quickTo functions for smoother animation
-      let xTo = gsap.quickTo(".cursor", "x", { duration: 0.6, ease: "power3" }),
-        yTo = gsap.quickTo(".cursor", "y", { duration: 0.6, ease: "power3" });
-
-      // Function to move the cursor
-      const movecursor = (e: MouseEvent) => {
-        lastKnownPosition.x = e.clientX;
-        lastKnownPosition.y = e.clientY;
-        xTo(e.clientX);
-        yTo(e.clientY);
-      };
-
-      // Function to add hover listeners
-      const addHoverListeners = () => {
-        // default cursor for a links
-        document.querySelectorAll("a").forEach((element) => {
-          element.addEventListener("mouseenter", () => {
-            const cursor = document.querySelector(".cursor");
-            if (cursor) {
-              gsap.to(cursor, { scale: 0.5, autoAlpha: 0.99, duration: 0.1 });
-            }
-          });
-          element.addEventListener("mouseleave", () => {
-            const cursor = document.querySelector(".cursor");
-            if (cursor) {
-              gsap.to(cursor, { scale: 1, autoAlpha: 0.7, duration: 0.1 });
-            }
-          });
-        });
-        // video cursor
-        document
-          .querySelectorAll('[data-cursor="video"]')
-          .forEach((element) => {
-            element.addEventListener("mouseenter", () => {
-              const cursor = document.querySelector(".cursor");
-              if (cursor) {
-                const video = element.querySelectorAll(".video");
-                // console.log("video", video);
-                if (video) {
-                  // const isMuted = video.muted;
-                  gsap.to(cursor, {
-                    scale: 3.5,
-                    autoAlpha: 0.9,
-                    duration: 0.1,
-                  });
-                  // cursor.textContent = isMuted ? "Unmute" : "Mute";
-                }
-              }
-            });
-            element.addEventListener("mouseleave", () => {
-              const cursor = document.querySelector(".cursor");
-              if (cursor) {
-                gsap.to(cursor, { scale: 1, autoAlpha: 0.7, duration: 0.3 });
-                cursor.textContent = "";
-              }
-            });
-
-            element.addEventListener("click", () => {
-              const video = element.querySelectorAll(".video");
-              if (video) {
-                // console.log("video", video);
-                // video.muted = !video.muted;
-                const cursor = document.querySelector(".cursor");
-                if (cursor) {
-                  // cursor.textContent = video.muted ? "Unmute" : "Mute";
-                }
-              }
-            });
-          });
-      };
-
-      window.removeEventListener("mousemove", movecursor);
-      window.addEventListener("mousemove", movecursor);
-      addHoverListeners();
-
-      // Hide cursor when mouse leaves the viewport
-      document.addEventListener("mouseleave", () => {
-        gsap.to(".cursor", {
-          duration: 0.7,
-          opacity: 0,
-        });
-      });
-
-      // Show cursor when mouse enters the viewport
-      document.addEventListener("mouseenter", () => {
-        gsap.to(".cursor", {
-          duration: 0.7,
-          opacity: 0.7,
-        });
+      element.addEventListener("mouseleave", () => {
+        gsap.to(cursor, { scale: 1, autoAlpha: 0.7, duration: 0.3 });
       });
     });
 
-    ctx.add(() => {
-      console.log("initializeCursor");
+    // Cursor scale on hover for cursor-scale elements
+    cursorScale.forEach((link) => {
+      link.addEventListener("mousemove", () => {
+        cursor.classList.add("grow");
+        if (link.classList.contains("small")) {
+          cursor.classList.remove("grow");
+          cursor.classList.add("grow-small");
+        }
+      });
+
+      link.addEventListener("mouseleave", () => {
+        cursor.classList.remove("grow");
+        cursor.classList.remove("grow-small");
+      });
     });
+
+    // Video-specific behavior
+    if (video) {
+      video.addEventListener("mousemove", () => {
+        gsap.to(cursor, {
+          scale: 3.5,
+          autoAlpha: 0.9,
+          backgroundColor: "transparent", // Achtergrondkleur verwijderen
+          duration: 0.1,
+        });
+        updateCursorText();
+      });
+
+      video.addEventListener("mouseleave", () => {
+        gsap.to(cursor, {
+          scale: 1,
+          autoAlpha: 0.7,
+          backgroundColor: "",
+          duration: 0.3,
+        });
+        cursorText.textContent = ""; // Clear cursor text when leaving video
+      });
+    }
+
+    // Update cursor text based on mute status
+    function updateCursorText() {
+      if (video && video.muted) {
+        cursorText.textContent = "ummute";
+      } else {
+        cursorText.textContent = "mute";
+      }
+    }
+
+    console.log("Cursor initialized");
   };
 
   document.addEventListener("astro:page-load", initializeCursor, {
     once: false,
   });
-  document.addEventListener("astro:afer-swap", initializeCursor);
+
+  document.addEventListener("astro:after-swap", initializeCursor);
 </script>

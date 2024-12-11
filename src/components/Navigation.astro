@@ -6,7 +6,7 @@ import { Image } from "astro:assets";
 import { urlForImage } from "../sanity/lib/urlForImage";
 import { urlForFile } from "../sanity/lib/urlForFile";
 
-const { title, logoVideo, logoVideoMp4, logoFallback = true } = Astro.props;
+const { title, logoVideo, logoVideoSafari, logoFallback = true } = Astro.props;
 ---
 
 <div id="main-navigation" class="is-desktop py-8">
@@ -24,7 +24,10 @@ const { title, logoVideo, logoVideoMp4, logoFallback = true } = Astro.props;
             id="logo-video"
           >
             <source src={urlForFile(logoVideo)} type="video/webm" />
-            <source src={urlForFile(logoVideoMp4)} type="video/mp4" />
+            <source
+              src={urlForFile(logoVideoSafari)}
+              type='video/mp4; codecs="hvc1"'
+            />
             {logoFallback && (
               <Image
                 src={urlForImage(logoFallback).url()}
@@ -75,10 +78,10 @@ const { title, logoVideo, logoVideoMp4, logoFallback = true } = Astro.props;
 
     & video,
     & img {
-      width: auto;
-      min-height: 72px;
-      height: calc(10vw + 5vh);
-      max-height: 112px;
+      min-width: 112px;
+      width: calc(10vw + 5vh);
+      max-width: 220px;
+      height: auto;
     }
   }
 </style>

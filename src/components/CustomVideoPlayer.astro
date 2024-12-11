@@ -10,22 +10,25 @@ const {
 } = Astro.props;
 ---
 
-<video
-  style={`--aspect-ratio: ${aspectRatio}`}
-  class={className}
-  autoplay
-  playsinline
-  loop
-  muted
-  poster={urlForImage(posterImage).url()}
-  data-cursor="video"
-  data-desktop-vid={videoUrlDesktop}
-  data-mobile-vid={videoUrlMobile}
-  {...rest}
->
-  Your browser does not support the video tag.
-</video>
-<button id="audio-control" class="button muted">Unmute</button>
+<div data-cursor="video">
+  <video
+    id="video"
+    muted
+    autoplay
+    loop
+    playsinline
+    style={`--aspect-ratio: ${aspectRatio}`}
+    class={`video ${className}`}
+    poster={urlForImage(posterImage).url()}
+    data-cursor="video"
+    data-desktop-vid={videoUrlDesktop}
+    data-mobile-vid={videoUrlMobile}
+    {rest}
+  >
+    Your browser does not support the video tag.
+  </video>
+  <button id="audio-control" class="button muted">Unmute</button>
+</div>
 
 <style lang="scss">
   .responsive-video {
@@ -71,47 +74,86 @@ const {
     }
   }
 </style>
+
 <script is:inline>
   //@ts-nocheck
-  // Get all videos and the audio control button
   function initializeVideoPlayer() {
     const videos = document.querySelectorAll(".video");
     const audioControlButton = document.getElementById("audio-control");
+    const cursorText = document.querySelector(".cursor-text"); // Zorg ervoor dat de cursor-tekst kan worden bijgewerkt
 
+    // Functie om de video te muten of unmute
     function toggleMute(video) {
+      if (!video) return;
       video.muted = !video.muted;
-      audioControlButton.textContent = video.muted ? "Unmute" : "Mute";
-      console.log("video muted", video.muted);
+      console.log("Video muted:", video.muted);
+      updateButtonText(video);
+      updateCursorText(video);
     }
 
-    // Add event listener to each video
+    // Update de mute/unmute tekst van de button
+    function updateButtonText(video) {
+      if (!audioControlButton) return;
+      audioControlButton.textContent = video.muted ? "mute" : "ummute";
+    }
+
+    // Update de cursor-tekst (Mute / Unmute) gebaseerd op de status van de video
+    function updateCursorText(video) {
+      if (!cursorText) return;
+      cursorText.textContent = video.muted ? "ummute" : "mute";
+    }
+
+    // Voeg click-event toe aan elke video
     videos.forEach((video) => {
       video.addEventListener("click", function (e) {
         e.preventDefault();
         toggleMute(video);
       });
+
+      video.addEventListener("mousemove", () => {
+        const cursor = document.querySelector(".cursor");
+        if (cursor) {
+          gsap.to(cursor, {
+            scale: 3.5,
+            autoAlpha: 0.9,
+            duration: 0.1,
+          });
+          updateCursorText(video);
+        }
+      });
+
+      video.addEventListener("mouseleave", () => {
+        const cursor = document.querySelector(".cursor");
+        if (cursor) {
+          gsap.to(cursor, { scale: 1, autoAlpha: 0.7, duration: 0.3 });
+          if (cursorText) {
+            cursorText.textContent = ""; // Leeg de tekst van de cursor
+          }
+        }
+      });
     });
 
-    // Add event listener to the audio control button
-    audioControlButton.addEventListener("click", function (e) {
-      e.preventDefault();
-      videos.forEach((video) => toggleMute(video));
-    });
+    // Voeg click-event toe aan de "audio-control" button
+    if (audioControlButton) {
+      audioControlButton.addEventListener("click", function (e) {
+        e.preventDefault();
+        videos.forEach((video) => toggleMute(video));
+      });
+    }
 
-    // Add source to video tag
+    // Video source toevoegen aan video tag
     function addSourceToVideo(element, src) {
       var source = document.createElement("source");
       source.src = src;
       source.type = "video/mp4";
-      console.log(src);
+      console.log("Video source added:", src);
       element.appendChild(source);
     }
 
-    // Determine screen size and select mobile or desktop video
+    // Bepaal of desktop of mobiele video wordt geladen
     function whichSizeVideo(element, src) {
-      var windowWidth = window.innerWidth
-        ? window.innerWidth
-        : $(window).width();
+      var windowWidth =
+        window.innerWidth || document.documentElement.clientWidth;
       if (windowWidth > 1200) {
         addSourceToVideo(element, src.dataset.desktopVid);
       } else {
@@ -119,7 +161,7 @@ const {
       }
     }
 
-    // Initialize only if page has videos
+    // Initialiseer video size
     function videoSize() {
       if (videos.length > 0) {
         videos.forEach(function (element) {
@@ -132,5 +174,5 @@ const {
   }
 
   document.addEventListener("astro:page-load", initializeVideoPlayer);
-  document.addEventListener("astro:after-preparation", initializeVideoPlayer);
+  document.addEventListener("astro:after-swap", initializeVideoPlayer);
 </script>
