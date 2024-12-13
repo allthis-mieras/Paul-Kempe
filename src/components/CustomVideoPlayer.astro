@@ -94,13 +94,14 @@ const {
     // Update de mute/unmute tekst van de button
     function updateButtonText(video) {
       if (!audioControlButton) return;
-      audioControlButton.textContent = video.muted ? "mute" : "ummute";
+      audioControlButton.textContent = video.muted ? "mute" : "unmute";
     }
 
     // Update de cursor-tekst (Mute / Unmute) gebaseerd op de status van de video
     function updateCursorText(video) {
       if (!cursorText) return;
       cursorText.textContent = video.muted ? "unmute" : "mute";
+      audioControlButton.textContent = video.muted ? "unmute" : "mute";
     }
 
     // Voeg click-event toe aan elke video
