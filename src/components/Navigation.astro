@@ -7,6 +7,8 @@ import { urlForImage } from "../sanity/lib/urlForImage";
 import { urlForFile } from "../sanity/lib/urlForFile";
 
 const { title, logoVideo, logoVideoSafari, logoFallback = true } = Astro.props;
+
+console.log("logoVideoSafari", logoVideoSafari);
 ---
 
 <div id="main-navigation" class="is-desktop py-8">
@@ -23,11 +25,11 @@ const { title, logoVideo, logoVideoSafari, logoFallback = true } = Astro.props;
             poster={urlForImage(logoFallback).url()}
             id="logo-video"
           >
-            <source src={urlForFile(logoVideo)} type="video/webm" />
             <source
               src={urlForFile(logoVideoSafari)}
               type='video/mp4; codecs="hvc1"'
             />
+            <source src={urlForFile(logoVideo)} type="video/webm" />
             {logoFallback && (
               <Image
                 src={urlForImage(logoFallback).url()}
