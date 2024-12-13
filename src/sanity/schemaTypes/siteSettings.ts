@@ -53,7 +53,7 @@ export const siteSettingsType = defineType({
       description: "Please upload a .mov (HEVC with alpha) here.",
       group: "website",
       options: {
-        accept: "video/mov, video/mp4",
+        accept: "video/quicktime,video/mp4",
       },
     }),
     defineField({
