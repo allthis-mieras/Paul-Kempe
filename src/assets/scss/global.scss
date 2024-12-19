@@ -32,7 +32,7 @@
         monospace;
     // light theme
     --clr-brand: rgb(225, 33, 25);
-    --font-color: var(--black);
+    --font-color: var(--clr-brand);
     --background-rgb: 255, 255, 255; // use with rgba
     --action-color: var(--black);
     --action-color-state: var(--black);
