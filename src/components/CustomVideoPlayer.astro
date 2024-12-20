@@ -20,7 +20,6 @@ const {
     style={`--aspect-ratio: ${aspectRatio}`}
     class={`video ${className}`}
     poster={urlForImage(posterImage).url()}
-    data-cursor="video"
     data-desktop-vid={videoUrlDesktop}
     data-mobile-vid={videoUrlMobile}
     {...rest}
@@ -58,7 +57,8 @@ const {
     aspect-ratio: 9 / 16;
   }
 
-  button {
+  .button {
+    display: none;
   }
 
   @media (min-width: 768px) {
@@ -69,107 +69,111 @@ const {
       display: none;
     }
 
-    button {
+    .button {
       display: none;
     }
   }
 </style>
 
 <script is:inline>
-  //@ts-nocheck
   function initializeVideoPlayer() {
-    const videos = document.querySelectorAll(".video");
+    const video = document.getElementById("video");
     const audioControlButton = document.getElementById("audio-control");
-    const cursorText = document.querySelector(".cursor-text"); // Zorg ervoor dat de cursor-tekst kan worden bijgewerkt
+    const cursorIcon = document.querySelector(".cursor-icon");
 
-    // Functie om de video te muten of unmute
-    function toggleMute(video) {
-      if (!video) return;
+    if (!video) return;
+
+    /**
+     * Toggle mute/unmute state for the video
+     */
+    const toggleMute = () => {
       video.muted = !video.muted;
-      console.log("Video muted:", video.muted);
-      updateButtonText(video);
-      updateCursorText(video);
-    }
+      updateIcons();
+    };
 
-    // Update de mute/unmute tekst van de button
-    function updateButtonText(video) {
-      if (!audioControlButton) return;
-      audioControlButton.textContent = video.muted ? "mute" : "unmute";
-    }
+    /**
+     * Update cursor and audio control button based on mute status
+     */
+    const updateIcons = () => {
+      const iconSrc = video.muted ? "/icon-on.svg" : "/icon-mute.svg";
+      if (cursorIcon) cursorIcon.src = iconSrc;
+      if (audioControlButton)
+        audioControlButton.textContent = video.muted ? "Unmute" : "Mute";
+    };
 
-    // Update de cursor-tekst (Mute / Unmute) gebaseerd op de status van de video
-    function updateCursorText(video) {
-      if (!cursorText) return;
-      cursorText.textContent = video.muted ? "unmute" : "mute";
-      audioControlButton.textContent = video.muted ? "unmute" : "mute";
-    }
+    /**
+     * Event listener for video click
+     */
+    video.addEventListener("click", toggleMute);
 
-    // Voeg click-event toe aan elke video
-    videos.forEach((video) => {
-      video.addEventListener("click", function (e) {
-        e.preventDefault();
-        toggleMute(video);
-      });
-
-      video.addEventListener("mousemove", () => {
-        const cursor = document.querySelector(".cursor");
-        if (cursor) {
-          gsap.to(cursor, {
-            scale: 3.5,
-            autoAlpha: 0.9,
-            duration: 0.1,
-          });
-          updateCursorText(video);
-        }
-      });
-
-      video.addEventListener("mouseleave", () => {
-        const cursor = document.querySelector(".cursor");
-        if (cursor) {
-          gsap.to(cursor, { scale: 1, autoAlpha: 0.7, duration: 0.3 });
-          if (cursorText) {
-            cursorText.textContent = ""; // Leeg de tekst van de cursor
-          }
-        }
-      });
+    /**
+     * Update cursor on video hover
+     */
+    video.addEventListener("mousemove", () => {
+      const cursor = document.querySelector(".cursor");
+      if (cursor) {
+        cursor.classList.add("grow");
+        cursor.style.backgroundColor = "transparent";
+      }
+      if (cursorIcon) {
+        cursorIcon.style.display = "block";
+        cursorIcon.src = video.muted ? "/icon-on.svg" : "/icon-mute.svg";
+      }
     });
 
-    // Voeg click-event toe aan de "audio-control" button
+    /**
+     * Reset cursor when mouse leaves the video
+     */
+    video.addEventListener("mouseleave", () => {
+      const cursor = document.querySelector(".cursor");
+      if (cursor) {
+        cursor.classList.remove("grow");
+        cursor.style.backgroundColor = "red";
+      }
+      if (cursorIcon) {
+        cursorIcon.style.display = "none";
+      }
+    });
+
+    /**
+     * Handle click on the audio control button
+     */
     if (audioControlButton) {
-      audioControlButton.addEventListener("click", function (e) {
+      audioControlButton.addEventListener("click", (e) => {
         e.preventDefault();
-        videos.forEach((video) => toggleMute(video));
+        toggleMute();
       });
     }
 
-    // Video source toevoegen aan video tag
-    function addSourceToVideo(element, src) {
-      var source = document.createElement("source");
+    /**
+     * Dynamically add source to video based on window width
+     */
+    const addSourceToVideo = (element, src) => {
+      const source = document.createElement("source");
       source.src = src;
       source.type = "video/mp4";
-      console.log("Video source added:", src);
       element.appendChild(source);
-    }
+    };
 
-    // Bepaal of desktop of mobiele video wordt geladen
-    function whichSizeVideo(element, src) {
-      var windowWidth =
+    /**
+     * Determine which video (desktop or mobile) to load
+     */
+    const whichSizeVideo = (element, src) => {
+      const windowWidth =
         window.innerWidth || document.documentElement.clientWidth;
       if (windowWidth > 1200) {
         addSourceToVideo(element, src.dataset.desktopVid);
       } else {
         addSourceToVideo(element, src.dataset.mobileVid);
       }
-    }
+    };
 
-    // Initialiseer video size
-    function videoSize() {
-      if (videos.length > 0) {
-        videos.forEach(function (element) {
-          whichSizeVideo(element, element);
-        });
-      }
-    }
+    /**
+     * Initialize video size
+     */
+    const videoSize = () => {
+      whichSizeVideo(video, video);
+    };
 
     videoSize();
   }

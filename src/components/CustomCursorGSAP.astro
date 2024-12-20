@@ -1,25 +1,16 @@
----
-
----
-
 <div class="cursor">
-  <span class="cursor-text"
-    ><img src="/icon-mute.svg" alt="Mute Icon" class="cursor-icon" />
+  <span class="cursor-text">
+    <img src="/icon-on.svg" alt="Mute Icon" class="cursor-icon" />
   </span>
 </div>
-
 <style>
   .cursor {
     position: fixed;
     width: 2rem;
     height: 2rem;
-    padding: 1rem;
     top: 0;
     left: 0;
-    background: var(
-      --font-color,
-      red
-    ); /* Fallback naar rood als var niet is ingesteld */
+    background: transparent;
     border-radius: 50%;
     pointer-events: none;
     z-index: 2000;
@@ -28,36 +19,39 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.675rem;
-    font-weight: bold;
-    color: var(--font-color);
+    color: var(--font-color, red);
   }
 
-  .unmute {
-    content: "unmute";
+  .cursor.grow {
+    scale: 3.5; /* Maak de cursor groter */
+    background-color: transparent; /* Verwijder de rode achtergrondkleur */
   }
 
-  .mute {
-    content: "mute";
+  .cursor-icon {
+    width: 100%;
+    height: 100%;
+    display: none; /* Verberg standaard het icoon */
+    transition: opacity 0.3s ease;
   }
-  .cursor {
-    color: var(--font-color);
+
+  .cursor-icon[src] {
+    display: block; /* Toon de afbeelding als de src is ingesteld */
   }
+
   .cursor.hide {
     opacity: 0;
     transition: opacity 0.3s ease;
   }
-  .cursor-text {
-    font-size: 0.675rem;
-    color: var(--font-color);
-  }
 
-  .cursor-icon {
-    position: relative;
+  .cursor-text img {
     width: 100%;
     height: 100%;
     display: block;
-    fill: currentColor; /* Gebruik de kleur van de tekst */
+    fill: currentColor;
+  }
+
+  .cursor-text img[src=""] {
+    display: none; /* Verberg het icoon als src leeg is */
   }
 </style>
 
@@ -65,52 +59,29 @@
   import { gsap } from "gsap";
 
   let cursor: HTMLElement | null;
-  let cursorText: HTMLElement | null;
   let cursorIcon: HTMLImageElement | null;
   let video: HTMLVideoElement | null;
-  let cursorScale: NodeListOf<HTMLElement>;
-
-  let lastKnownPosition = {
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2,
-  };
-
-  const isTouchDevice =
-    "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
   const initializeCursor = () => {
     cursor = document.querySelector(".cursor");
-    cursorText = document.querySelector(".cursor-text");
     cursorIcon = document.querySelector(".cursor-icon");
     video = document.getElementById("video") as HTMLVideoElement | null;
-    cursorScale = document.querySelectorAll(".cursor-scale");
 
-    // Verberg cursor op touch-apparaten
-    if (isTouchDevice || !cursor) {
-      cursor?.style.setProperty("display", "none");
-      return;
-    }
+    if (!cursor) return;
 
-    // Stel de cursor positie in
     gsap.set(cursor, {
       xPercent: -50,
       yPercent: -50,
-      x: lastKnownPosition.x,
-      y: lastKnownPosition.y,
     });
 
     const xTo = gsap.quickTo(cursor, "x", { duration: 0.6, ease: "power3" });
     const yTo = gsap.quickTo(cursor, "y", { duration: 0.6, ease: "power3" });
 
-    // Beweeg de cursor met de muis
     window.addEventListener("mousemove", (e) => {
-      lastKnownPosition.x = e.clientX;
-      lastKnownPosition.y = e.clientY;
       xTo(e.clientX);
       yTo(e.clientY);
     });
 
-    // Verberg cursor bij het verlaten van de viewport
     document.addEventListener("mouseleave", () => {
       gsap.to(cursor, { duration: 0.7, opacity: 0 });
     });
@@ -119,73 +90,50 @@
       gsap.to(cursor, { duration: 0.7, opacity: 0.7 });
     });
 
-    // Hover effect op links (<a> tags)
-    document.querySelectorAll("a").forEach((element) => {
-      element.addEventListener("mouseenter", () => {
-        gsap.to(cursor, { scale: 0.5, autoAlpha: 0.99, duration: 0.1 });
-      });
-
-      element.addEventListener("mouseleave", () => {
-        gsap.to(cursor, { scale: 1, autoAlpha: 0.7, duration: 0.3 });
-      });
-    });
-
-    // Scale effect voor cursor-scale elementen
-    cursorScale.forEach((link) => {
+    document.querySelectorAll("a").forEach((link) => {
       link.addEventListener("mousemove", () => {
-        cursor?.classList.add("grow");
-        if (link.classList.contains("small")) {
-          cursor?.classList.remove("grow");
-          cursor?.classList.add("grow-small");
-        }
+        gsap.to(cursor, {
+          scale: 1.5,
+          autoAlpha: 1,
+          duration: 0.1,
+        });
       });
 
       link.addEventListener("mouseleave", () => {
-        cursor?.classList.remove("grow");
-        cursor?.classList.remove("grow-small");
+        gsap.to(cursor, {
+          scale: 1,
+          autoAlpha: 0.7,
+          duration: 0.3,
+        });
       });
     });
 
-    // Video specifieke functionaliteit
     video?.addEventListener("mousemove", () => {
       gsap.to(cursor, {
         scale: 3.5,
         autoAlpha: 1,
-        backgroundColor: "transparent",
         duration: 0.1,
       });
-      updateCursorText();
+      updateCursorIcon();
     });
 
     video?.addEventListener("mouseleave", () => {
       gsap.to(cursor, {
         scale: 1,
         autoAlpha: 0.7,
-        backgroundColor: "",
         duration: 0.3,
       });
-      if (cursorText) {
-        cursorText.textContent = ""; // Clear cursor tekst
-      }
     });
 
-    function updateCursorText() {
-      if (cursorText) {
-        cursorText.textContent = video?.muted ? "unmute" : "mute";
-      }
+    function updateCursorIcon() {
       if (video?.muted) {
-        cursorIcon?.setAttribute("src", "/icon-mute.svg");
-      } else {
         cursorIcon?.setAttribute("src", "/icon-on.svg");
+      } else {
+        cursorIcon?.setAttribute("src", "/icon-mute.svg");
       }
     }
-
-    console.log("Cursor initialized");
   };
 
-  document.addEventListener("astro:page-load", initializeCursor, {
-    once: false,
-  });
-
+  document.addEventListener("astro:page-load", initializeCursor);
   document.addEventListener("astro:after-swap", initializeCursor);
 </script>
