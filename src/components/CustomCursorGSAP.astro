@@ -53,6 +53,12 @@
   .cursor-text img[src=""] {
     display: none; /* Verberg het icoon als src leeg is */
   }
+
+  @media (hover: none) and (pointer: coarse) {
+    .cursor {
+      display: none;
+    }
+  }
 </style>
 
 <script>
@@ -112,6 +118,7 @@
       gsap.to(cursor, {
         scale: 2.5,
         autoAlpha: 1,
+        backgroundColor: "transparent", // Rode achtergrondkleur
         duration: 0.1,
       });
       updateCursorIcon();
@@ -121,6 +128,7 @@
       gsap.to(cursor, {
         scale: 1,
         autoAlpha: 0.7,
+        backgroundColor: "red", // Rode achtergrondkleur
         duration: 0.3,
       });
     });
