@@ -1,6 +1,6 @@
 <div class="cursor">
   <span class="cursor-text">
-    <img src="/icon-on.svg" alt="Mute Icon" class="cursor-icon" />
+    <img src="/icon-on.svg" alt="Mute Icon" width="32" class="cursor-icon" />
   </span>
 </div>
 <style>
@@ -23,13 +23,13 @@
   }
 
   .cursor.grow {
-    scale: 3.5; /* Maak de cursor groter */
+    scale: 1.5; /* Maak de cursor groter */
     background-color: transparent; /* Verwijder de rode achtergrondkleur */
   }
 
   .cursor-icon {
-    width: 100%;
-    height: 100%;
+    width: 60%;
+    height: 60%;
     display: none; /* Verberg standaard het icoon */
     transition: opacity 0.3s ease;
   }
@@ -52,6 +52,12 @@
 
   .cursor-text img[src=""] {
     display: none; /* Verberg het icoon als src leeg is */
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    .cursor {
+      display: none;
+    }
   }
 </style>
 
@@ -110,8 +116,9 @@
 
     video?.addEventListener("mousemove", () => {
       gsap.to(cursor, {
-        scale: 3.5,
+        scale: 2.5,
         autoAlpha: 1,
+        backgroundColor: "transparent", // Rode achtergrondkleur
         duration: 0.1,
       });
       updateCursorIcon();
@@ -121,6 +128,7 @@
       gsap.to(cursor, {
         scale: 1,
         autoAlpha: 0.7,
+        backgroundColor: "red", // Rode achtergrondkleur
         duration: 0.3,
       });
     });
