@@ -6,7 +6,7 @@ const { title, showDate, timeZone = true } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
-<footer class="container">
+<footer class="container stretch">
   <div class="year"><p>{year} © {title}</p></div>
   <div class="timezone">
     <CustomClock timeZone={timeZone} showDate={showDate} />
@@ -17,11 +17,14 @@ const year = new Date().getFullYear();
   footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    padding-block: var(--space-xs);
-    padding-bottom: var(--space-2xl);
+    padding-block: var(--space-m);
 
     font-family: var(--font-family-mono);
     font-size: var(--fs--3);
+    z-index: 1000;
+    position: relative;
+    background-color: var(--background);
+    top: -0px;
 
     p {
       font-size: var(--fs--3);
