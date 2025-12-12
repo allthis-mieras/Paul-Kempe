@@ -17,6 +17,7 @@ import {
 } from "@sanity/dashboard";
 
 export default defineConfig({
+  name: "PaulKempeStudio",
   projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID,
   dataset: import.meta.env.PUBLIC_SANITY_DATASET,
   plugins: [

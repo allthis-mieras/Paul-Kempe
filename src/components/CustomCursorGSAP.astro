@@ -64,84 +64,126 @@
 <script>
   import { gsap } from "gsap";
 
-  let cursor: HTMLElement | null;
-  let cursorIcon: HTMLImageElement | null;
-  let video: HTMLVideoElement | null;
+  let cursor: HTMLElement | null = null;
+  let cursorIcon: HTMLImageElement | null = null;
+  let xTo: ((value: number) => void) | null = null;
+  let yTo: ((value: number) => void) | null = null;
+  let mouseMoveHandler: ((e: MouseEvent) => void) | null = null;
 
   const initializeCursor = () => {
-    cursor = document.querySelector(".cursor");
-    cursorIcon = document.querySelector(".cursor-icon");
-    video = document.getElementById("video") as HTMLVideoElement | null;
+    cursor = document.querySelector<HTMLElement>(".cursor");
+    cursorIcon = document.querySelector<HTMLImageElement>(".cursor-icon");
 
     if (!cursor) return;
+
+    // Remove old event listeners if they exist
+    if (mouseMoveHandler) {
+      window.removeEventListener("mousemove", mouseMoveHandler);
+    }
 
     gsap.set(cursor, {
       xPercent: -50,
       yPercent: -50,
     });
 
-    const xTo = gsap.quickTo(cursor, "x", { duration: 0.6, ease: "power3" });
-    const yTo = gsap.quickTo(cursor, "y", { duration: 0.6, ease: "power3" });
+    xTo = gsap.quickTo(cursor, "x", { duration: 0.6, ease: "power3" });
+    yTo = gsap.quickTo(cursor, "y", { duration: 0.6, ease: "power3" });
 
-    window.addEventListener("mousemove", (e) => {
-      xTo(e.clientX);
-      yTo(e.clientY);
-    });
+    mouseMoveHandler = (e: MouseEvent) => {
+      if (xTo && yTo) {
+        xTo(e.clientX);
+        yTo(e.clientY);
+      }
+    };
+
+    window.addEventListener("mousemove", mouseMoveHandler);
 
     document.addEventListener("mouseleave", () => {
-      gsap.to(cursor, { duration: 0.7, opacity: 0 });
+      if (cursor) {
+        gsap.to(cursor, { duration: 0.7, opacity: 0 });
+      }
     });
 
     document.addEventListener("mouseenter", () => {
-      gsap.to(cursor, { duration: 0.7, opacity: 0.7 });
+      if (cursor) {
+        gsap.to(cursor, { duration: 0.7, opacity: 0.7 });
+      }
     });
 
+    // Link hover effects
     document.querySelectorAll("a").forEach((link) => {
       link.addEventListener("mousemove", () => {
-        gsap.to(cursor, {
-          scale: 1.5,
-          autoAlpha: 1,
-          duration: 0.1,
-        });
+        if (cursor) {
+          gsap.to(cursor, {
+            scale: 1.5,
+            autoAlpha: 1,
+            duration: 0.1,
+          });
+        }
       });
 
       link.addEventListener("mouseleave", () => {
-        gsap.to(cursor, {
-          scale: 1,
-          autoAlpha: 0.7,
-          duration: 0.3,
-        });
+        if (cursor) {
+          gsap.to(cursor, {
+            scale: 1,
+            autoAlpha: 0.7,
+            duration: 0.3,
+          });
+        }
       });
     });
 
-    video?.addEventListener("mousemove", () => {
-      gsap.to(cursor, {
-        scale: 2.5,
-        autoAlpha: 1,
-        backgroundColor: "transparent", // Rode achtergrondkleur
-        duration: 0.1,
+    // Video hover effects - find video dynamically
+    const video = document.querySelector<HTMLVideoElement>("#video");
+    if (video) {
+      video.addEventListener("mousemove", () => {
+        if (cursor) {
+          gsap.to(cursor, {
+            scale: 2.5,
+            autoAlpha: 1,
+            backgroundColor: "transparent",
+            duration: 0.1,
+          });
+          updateCursorIcon(video);
+        }
       });
-      updateCursorIcon();
-    });
 
-    video?.addEventListener("mouseleave", () => {
-      gsap.to(cursor, {
-        scale: 1,
-        autoAlpha: 0.7,
-        backgroundColor: "red", // Rode achtergrondkleur
-        duration: 0.3,
+      video.addEventListener("mouseleave", () => {
+        if (cursor) {
+          gsap.to(cursor, {
+            scale: 1,
+            autoAlpha: 0.7,
+            backgroundColor: "red",
+            duration: 0.3,
+          });
+        }
+        if (cursorIcon) {
+          cursorIcon.setAttribute("src", "");
+          cursorIcon.style.display = "none";
+        }
       });
-    });
+    }
 
-    function updateCursorIcon() {
-      if (video?.muted) {
-        cursorIcon?.setAttribute("src", "/icon-on.svg");
+    function updateCursorIcon(video: HTMLVideoElement) {
+      if (!cursorIcon) return;
+      if (video.muted) {
+        cursorIcon.setAttribute("src", "/icon-on.svg");
+        cursorIcon.style.display = "block";
       } else {
-        cursorIcon?.setAttribute("src", "/icon-mute.svg");
+        cursorIcon.setAttribute("src", "/icon-mute.svg");
+        cursorIcon.style.display = "block";
       }
     }
   };
 
+  // Initialize on page load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeCursor);
+  } else {
+    initializeCursor();
+  }
+
+  // Re-initialize on view transitions (Astro 5)
   document.addEventListener("astro:page-load", initializeCursor);
   document.addEventListener("astro:after-swap", initializeCursor);
 </script>

@@ -307,13 +307,29 @@ console.log("logoVideoSafari", logoVideoSafari);
 <script>
   // @ts-nocheck
 
-  document.addEventListener("astro:page-load", () => {
+  // Store event handlers to prevent duplicates
+  let resizeHandler: (() => void) | null = null;
+  let clickHandler: ((event: Event) => void) | null = null;
+
+  function initializeNavigation() {
     // variables
     const mainNav = document.querySelector("#main-navigation");
+    if (!mainNav) return;
+    
     const mainMenu = mainNav.querySelector("ul");
     const dropdownMenus = [
       ...document.querySelectorAll(".has-dropdown button"),
     ];
+    
+    // Re-initialize video if it exists
+    const logoVideo = document.querySelector("#logo-video") as HTMLVideoElement;
+    if (logoVideo) {
+      logoVideo.load();
+      // Try to play the video
+      logoVideo.play().catch(() => {
+        // Video autoplay may be blocked by browser, that's okay
+      });
+    }
 
     // functions
     const setActiveMenuItem = () => {
@@ -343,22 +359,23 @@ console.log("logoVideoSafari", logoVideoSafari);
       });
     };
 
-    // const checkMenuSize = () => {
-    //   const mainNavWidth = mainNav.getBoundingClientRect().width;
-    //   const desktopMenuWidth = document
-    //     .querySelector(".desktop-menu")
-    //     .getBoundingClientRect().width;
-    //   const logoWidthBuffer = 300;
-    //   const totalMenuWidth = Math.round(desktopMenuWidth) + logoWidthBuffer;
+    const checkMenuSize = () => {
+      const mainNavWidth = mainNav.getBoundingClientRect().width;
+      const desktopMenu = document.querySelector(".desktop-menu");
+      if (!desktopMenu) return;
+      
+      const desktopMenuWidth = desktopMenu.getBoundingClientRect().width;
+      const logoWidthBuffer = 300;
+      const totalMenuWidth = Math.round(desktopMenuWidth) + logoWidthBuffer;
 
-    //   if (totalMenuWidth >= mainNavWidth) {
-    //     mainNav.classList.remove("is-desktop");
-    //     mainNav.classList.add("is-mobile");
-    //   } else if (totalMenuWidth <= mainNavWidth) {
-    //     mainNav.classList.add("is-desktop");
-    //     mainNav.classList.remove("is-mobile");
-    //   }
-    // };
+      if (totalMenuWidth >= mainNavWidth) {
+        mainNav.classList.remove("is-desktop");
+        mainNav.classList.add("is-mobile");
+      } else if (totalMenuWidth <= mainNavWidth) {
+        mainNav.classList.add("is-desktop");
+        mainNav.classList.remove("is-mobile");
+      }
+    };
 
     const isOutOfViewport = (element) => {
       const elementBounds = element.getBoundingClientRect();
@@ -522,8 +539,17 @@ console.log("logoVideoSafari", logoVideoSafari);
     setActiveMenuItem();
     checkMenuSize();
 
-    window.addEventListener("resize", checkMenuSize);
-    window.addEventListener("click", (event) => {
+    // Remove old handlers if they exist
+    if (resizeHandler) {
+      window.removeEventListener("resize", resizeHandler);
+    }
+    if (clickHandler) {
+      window.removeEventListener("click", clickHandler);
+    }
+
+    // Create new handlers
+    resizeHandler = checkMenuSize;
+    clickHandler = (event) => {
       const element = event.target as Element;
       if (
         !element.hasAttribute("aria-haspopup") &&
@@ -531,6 +557,20 @@ console.log("logoVideoSafari", logoVideoSafari);
       ) {
         closeAllDropdownMenus();
       }
-    });
-  });
+    };
+
+    window.addEventListener("resize", resizeHandler);
+    window.addEventListener("click", clickHandler);
+  }
+
+  // Initialize on page load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeNavigation);
+  } else {
+    initializeNavigation();
+  }
+
+  // Re-initialize on view transitions (Astro 5)
+  document.addEventListener("astro:page-load", initializeNavigation);
+  document.addEventListener("astro:after-swap", initializeNavigation);
 </script>
