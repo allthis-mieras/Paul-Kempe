@@ -1,5 +1,4 @@
 ---
-import type { SanityDocument } from "@sanity/client";
 import Layout from "../layouts/Layout.astro";
 import CustomVideoPlayer from "../components/CustomVideoPlayer.astro";
 
@@ -14,7 +13,6 @@ import {
   getHomepageContent,
   getAboutContent,
   getContactContent,
-  getPosts,
 } from "../sanity/lib/load-content";
 
 const homepage = await getHomepageContent();
@@ -26,7 +24,6 @@ const about: {
   clientsTitle?: string;
 } = await getAboutContent();
 const contact = await getContactContent();
-const posts = await getPosts();
 
 // console.log("CLIENTS", about.clients);
 ---

@@ -7,7 +7,8 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.6",
@@ -45,13 +46,14 @@
     "styled-components": "^6.1.13",
     "typescript": "^5.5.4",
     "utopia-core": "^1.6.0",
-    "utopia-core-scss": "^1.1.0"
+    "utopia-core-scss": "^1.3.0"
   },
   "devDependencies": {
     "@iconify-json/akar-icons": "^1.2.1",
     "@iconify-json/ion": "^1.2.1",
     "@types/splitting": "^1.0.6",
     "accessible-astro-components": "^2.3.6",
+    "patch-package": "^8.0.1",
     "prettier": "^3.4.2",
     "prettier-plugin-astro": "^0.14.1",
     "vite": "^5.4.9"

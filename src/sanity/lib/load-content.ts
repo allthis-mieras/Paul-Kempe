@@ -47,9 +47,3 @@ export async function getPosts() {
   });
   return posts;
 }
-
-// Usage
-const homepage = await getHomepageContent();
-const about = await getAboutContent();
-const contact = await getContactContent();
-const posts = await getPosts();
