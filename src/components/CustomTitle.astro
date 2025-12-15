@@ -39,8 +39,19 @@ const computedFontSize = fontSizeMap[size] || fontSizeMap.default;
 
 <script>
   import Splitting from "splitting";
-  Splitting();
+  
+  function initializeSplitting() {
+    Splitting();
+  }
+  
+  // Initialize on page load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeSplitting);
+  } else {
+    initializeSplitting();
+  }
 
-  document.addEventListener("astro:page-load", () => Splitting());
-  document.addEventListener("astro:after-swap", () => Splitting());
+  // Re-initialize on view transitions (Astro 5)
+  document.addEventListener("astro:page-load", initializeSplitting);
+  document.addEventListener("astro:after-swap", initializeSplitting);
 </script>

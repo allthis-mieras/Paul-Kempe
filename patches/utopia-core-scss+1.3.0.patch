@@ -1,0 +1,15 @@
+diff --git a/node_modules/utopia-core-scss/src/helpers.scss b/node_modules/utopia-core-scss/src/helpers.scss
+index cdaba8e..22e396f 100644
+--- a/node_modules/utopia-core-scss/src/helpers.scss
++++ b/node_modules/utopia-core-scss/src/helpers.scss
+@@ -71,7 +71,9 @@
+     @warn "List index is #{$index} but list is only #{list.length($list)} item long for `remove-nth`.";
+   } @else {
+     $result: ();
+-    $index: if($index < 0, list.length($list) + $index + 1, $index);
++    @if $index < 0 {
++      $index: list.length($list) + $index + 1;
++    }
+ 
+     @for $i from 1 through list.length($list) {
+       @if $i != $index {

@@ -62,9 +62,16 @@
 <script>
   export let tags = ["figure", "h1", "h2", "h3", "div, p, li"]; // Default tags to observe
 
+  let currentObserver: IntersectionObserver | null = null;
+
   function initializeObserver() {
+    // Disconnect previous observer if it exists
+    if (currentObserver) {
+      currentObserver.disconnect();
+    }
+
     // Intersection Observer setup
-    const observer = new IntersectionObserver(
+    currentObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -84,17 +91,24 @@
 
     // Observe all elements that match the tags within <main>
     const mainContent = document.querySelector("main");
-    if (mainContent) {
+    if (mainContent && currentObserver) {
       tags.forEach((tag) => {
         const elements = mainContent.querySelectorAll(tag);
         elements.forEach((element) => {
-          observer.observe(element);
+          currentObserver!.observe(element);
         });
       });
     }
   }
 
-  document.addEventListener("astro:page-load", initializeObserver, {
-    once: false,
-  });
+  // Initialize on page load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeObserver);
+  } else {
+    initializeObserver();
+  }
+
+  // Re-initialize on view transitions (Astro 5)
+  document.addEventListener("astro:page-load", initializeObserver);
+  document.addEventListener("astro:after-swap", initializeObserver);
 </script>

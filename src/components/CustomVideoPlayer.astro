@@ -95,16 +95,17 @@ const {
   }
 </style>
 
-<script is:inline>
-  //@ts-nocheck
+<script>
+  import { gsap } from "gsap";
+
   function initializeVideoPlayer() {
-    const videos = document.querySelectorAll(".video");
+    const videos = document.querySelectorAll<HTMLVideoElement>(".video");
     const audioControlButton = document.getElementById("audio-control");
-    const audioControlIcon = document.querySelector(".audio-control-icon");
-    const cursorIcon = document.querySelector(".cursor-icon"); // Cursor icon voor mute/unmute
+    const audioControlIcon = document.querySelector<HTMLImageElement>(".audio-control-icon");
+    const cursorIcon = document.querySelector<HTMLImageElement>(".cursor-icon");
 
     // Functie om de video te muten of unmute
-    function toggleMute(video) {
+    function toggleMute(video: HTMLVideoElement) {
       if (!video) return;
       video.muted = !video.muted;
       updateButtonIcon(video);
@@ -112,27 +113,63 @@ const {
     }
 
     // Update de mute/unmute iconen van de button
-    function updateButtonIcon(video) {
+    function updateButtonIcon(video: HTMLVideoElement) {
       if (!audioControlIcon) return;
       audioControlIcon.src = video.muted ? "/icon-on.svg" : "/icon-mute.svg";
     }
 
     // Update de mute/unmute iconen van de cursor
-    function updateCursorIcon(video) {
+    function updateCursorIcon(video: HTMLVideoElement) {
       if (!cursorIcon) return;
       cursorIcon.src = video.muted ? "/icon-on.svg" : "/icon-mute.svg";
     }
 
-    // Voeg click-event toe aan elke video
+    // Video source toevoegen aan video tag
+    function addSourceToVideo(element: HTMLVideoElement, src: string) {
+      // Verwijder bestaande sources eerst
+      const existingSources = element.querySelectorAll("source");
+      existingSources.forEach((source) => source.remove());
+
+      const source = document.createElement("source");
+      source.src = src;
+      source.type = "video/mp4";
+      element.appendChild(source);
+      
+      // Laad en speel de video af
+      element.load();
+      element.play().catch((error) => {
+        console.log("Video autoplay blocked:", error);
+      });
+    }
+
+    // Bepaal of desktop of mobiele video wordt geladen
+    function whichSizeVideo(element: HTMLVideoElement) {
+      const windowWidth = window.innerWidth || document.documentElement.clientWidth;
+      const desktopVid = element.dataset.desktopVid;
+      const mobileVid = element.dataset.mobileVid;
+      
+      if (windowWidth > 1200 && desktopVid) {
+        addSourceToVideo(element, desktopVid);
+      } else if (mobileVid) {
+        addSourceToVideo(element, mobileVid);
+      }
+    }
+
+    // Initialiseer video size en events
     videos.forEach((video) => {
+      // Voeg source toe
+      whichSizeVideo(video);
+
+      // Voeg click-event toe aan video
       video.addEventListener("click", function (e) {
         e.preventDefault();
         toggleMute(video);
       });
 
+      // Cursor interactie
       video.addEventListener("mousemove", () => {
-        const cursor = document.querySelector(".cursor");
-        if (cursor) {
+        const cursor = document.querySelector<HTMLElement>(".cursor");
+        if (cursor && typeof gsap !== "undefined") {
           gsap.to(cursor, {
             scale: 3.5,
             autoAlpha: 0.9,
@@ -142,22 +179,22 @@ const {
         }
       });
 
-      video?.addEventListener("mouseleave", () => {
-        const cursor = document.querySelector(".cursor");
-        const cursorIcon = document.querySelector(".cursor-icon");
+      video.addEventListener("mouseleave", () => {
+        const cursor = document.querySelector<HTMLElement>(".cursor");
+        const cursorIcon = document.querySelector<HTMLImageElement>(".cursor-icon");
 
-        if (cursor) {
+        if (cursor && typeof gsap !== "undefined") {
           gsap.to(cursor, {
-            scale: 1, // Terug naar originele grootte
-            backgroundColor: "red", // Rode achtergrondkleur
-            autoAlpha: 0.7, // Transparantie naar standaardwaarde
-            duration: 0.3, // Animatieduurr
+            scale: 1,
+            backgroundColor: "red",
+            autoAlpha: 0.7,
+            duration: 0.3,
           });
         }
 
         if (cursorIcon) {
-          cursorIcon.setAttribute("src", ""); // Leeg het icoon
-          cursorIcon.style.display = "none"; // Verberg het icoon
+          cursorIcon.setAttribute("src", "");
+          cursorIcon.style.display = "none";
         }
       });
     });
@@ -169,39 +206,16 @@ const {
         videos.forEach((video) => toggleMute(video));
       });
     }
-
-    // Video source toevoegen aan video tag
-    function addSourceToVideo(element, src) {
-      const source = document.createElement("source");
-      source.src = src;
-      source.type = "video/mp4";
-      console.log("Video source added:", src);
-      element.appendChild(source);
-    }
-
-    // Bepaal of desktop of mobiele video wordt geladen
-    function whichSizeVideo(element, src) {
-      const windowWidth =
-        window.innerWidth || document.documentElement.clientWidth;
-      if (windowWidth > 1200) {
-        addSourceToVideo(element, src.dataset.desktopVid);
-      } else {
-        addSourceToVideo(element, src.dataset.mobileVid);
-      }
-    }
-
-    // Initialiseer video size
-    function videoSize() {
-      if (videos.length > 0) {
-        videos.forEach((element) => {
-          whichSizeVideo(element, element);
-        });
-      }
-    }
-
-    videoSize();
   }
 
+  // Initialize on page load
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeVideoPlayer);
+  } else {
+    initializeVideoPlayer();
+  }
+
+  // Re-initialize on view transitions (Astro 5)
   document.addEventListener("astro:page-load", initializeVideoPlayer);
   document.addEventListener("astro:after-swap", initializeVideoPlayer);
 </script>
