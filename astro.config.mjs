@@ -24,6 +24,14 @@ export default defineConfig({
     }
   }), react(), icon()],
   output: 'server',
+  image: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io"
+      }
+    ]
+  },
   adapter: netlify({
     imageCDN: false, // fix the images for Netlify
   }),

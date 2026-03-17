@@ -57,5 +57,8 @@
     "prettier": "^3.4.2",
     "prettier-plugin-astro": "^0.14.1",
     "vite": "^5.4.9"
+  },
+  "overrides": {
+    "tar": "7.5.11"
   }
 }
